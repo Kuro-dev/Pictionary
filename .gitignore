@@ -1,0 +1,8 @@
+*.iml
+.idea
+target
+*.cmp
+/testfiles/TestDecompressionFile.txt
+*.test
+/src/test/java/unitTests/filetests/benchmark/
+/logs
