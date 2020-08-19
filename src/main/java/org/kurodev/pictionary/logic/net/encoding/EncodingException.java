@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.logic.net.interfaces;
+package org.kurodev.pictionary.logic.net.encoding;
 
 /**
  * @author kuro

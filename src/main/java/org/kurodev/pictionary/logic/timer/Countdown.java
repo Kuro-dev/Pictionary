@@ -1,12 +1,14 @@
 package org.kurodev.pictionary.logic.timer;
 
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * @author kuro
  **/
-public class Countdown extends TimerTask {
+public class Countdown extends TimerTask implements Encodable {
     private final Timer timer = new Timer();
     private final int time;
     private final TimerCallback callback;
@@ -38,5 +40,15 @@ public class Countdown extends TimerTask {
 
     public void stop() {
         timer.cancel();
+    }
+
+    @Override
+    public void decode(byte[] bytes) {
+
+    }
+
+    @Override
+    public byte[] encode() {
+        return new byte[0];
     }
 }

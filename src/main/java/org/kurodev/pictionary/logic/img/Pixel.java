@@ -1,9 +1,11 @@
 package org.kurodev.pictionary.logic.img;
 
-import org.kurodev.pictionary.logic.net.interfaces.Encodable;
-import org.kurodev.pictionary.logic.net.interfaces.EncodingException;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
+import org.kurodev.pictionary.logic.util.ByteUtils;
 
+import java.util.Arrays;
 import java.util.Objects;
+
 
 /**
  * @author kuro
@@ -56,19 +58,29 @@ public class Pixel implements Encodable {
 
     @Override
     public void decode(byte[] bytes) {
-        final String st = new String(bytes);
-        String[] split = st.split(delimiter());
-        if (split.length == 3) {
-            x = Integer.parseInt(split[0]);
-            y = Integer.parseInt(split[1]);
-            argb = Integer.parseInt(split[2]);
-        } else {
-            throw new EncodingException("Could not decode Pixel format");
-        }
+        x = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 0, 4));
+        y = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 4, 8));
+        argb = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 8, 12));
     }
 
     @Override
     public byte[] encode() {
-        return (x + delimiter() + y + delimiter() + argb).getBytes();
+        byte[] out = new byte[24];
+        byte[] b = ByteUtils.intToByte(this.x);
+        System.arraycopy(b, 0, out, 0, 4);
+        b = ByteUtils.intToByte(this.y);
+        System.arraycopy(b, 0, out, 4, 4);
+        b = ByteUtils.intToByte(this.argb);
+        System.arraycopy(b, 0, out, 8, 4);
+        return out;
+    }
+
+    @Override
+    public String toString() {
+        return "Pixel{" +
+                "x=" + x +
+                ", y=" + y +
+                ", argb=" + argb +
+                '}';
     }
 }

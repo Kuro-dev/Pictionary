@@ -1,6 +1,7 @@
 import org.junit.Test;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,5 +24,12 @@ public class ImageTest {
         byte[] code = pix.encode();
         Pixel pix1 = new Pixel(code);
         assertEquals(pix, pix1);
+    }
+
+    @Test
+    public void byteUtilTest() {
+        int x = 50;
+        byte[] x2 = ByteUtils.intToByte(x);
+        assertEquals(x, ByteUtils.byteToInt(x2));
     }
 }
