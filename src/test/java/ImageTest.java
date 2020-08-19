@@ -1,6 +1,8 @@
-import org.junit.Assert;
 import org.junit.Test;
 import org.kurodev.pictionary.logic.img.Image;
+import org.kurodev.pictionary.logic.img.Pixel;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author kuro
@@ -12,6 +14,14 @@ public class ImageTest {
         Image img = new Image(width, height);
         img.write(x, y, argb);
         int[] image = img.getImage();
-        Assert.assertEquals(argb, image[24]);
+        assertEquals(argb, image[24]);
+    }
+
+    @Test
+    public void pixelEncodingWorks() {
+        Pixel pix = new Pixel(2, 5, 241515);
+        byte[] code = pix.encode();
+        Pixel pix1 = new Pixel(code);
+        assertEquals(pix, pix1);
     }
 }
