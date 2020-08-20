@@ -2,6 +2,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.StreamReader;
@@ -38,10 +39,16 @@ public class StreamReaderWriterTest {
     }
 
     @Test
-    @Parameters({"1,2", "3,5", "5,8", "2,15", "10,6", "15,12", "15,15", "10,10"})
+    @Parameters({"1,2", "3,5", "5,8", "2,15", "10,6", "15,12", "15,15", "10,10", "100,2", "1,1000", "245,1633"})
     public void testImageStreamReadWrite(int width, int height) throws IOException {
         Image image = new Image(width, height);
         testStreamRead(image);
+    }
+
+    @Test
+    public void testPictionaryStreamReadWrite() throws IOException {
+        Pictionary pic = new Pictionary("Hello!");
+        testStreamRead(pic);
     }
 
     @Test
