@@ -17,6 +17,11 @@ public class Image implements Encodable {
     private int width;
     private int height;
 
+    /**
+     * Applies the state from the given bytes and inherits them into this instance.
+     *
+     * @param bytes representation resulting from {@link #encode()}
+     */
     public Image(byte[] bytes) {
         decode(bytes);
     }
@@ -45,7 +50,7 @@ public class Image implements Encodable {
     }
 
     public void write(int x, int y, int argb) {
-        System.out.printf("Writing %d to %dx%d\n", argb, x, y);
+        //System.out.printf("Writing %d to %dx%d\n", argb, x, y);
         pixels[x][y] = argb;
     }
 
@@ -94,11 +99,7 @@ public class Image implements Encodable {
         byte[] width = ByteUtils.intToByte(this.width);
         byte[] height = ByteUtils.intToByte(this.height);
         byte[] pix = ByteUtils.intToByte(this.getImage());
-        byte[] out = new byte[width.length + height.length + pix.length];
-        System.arraycopy(width, 0, out, 0, width.length);
-        System.arraycopy(height, 0, out, 4, height.length);
-        System.arraycopy(pix, 0, out, 8, pix.length);
-        return out;
+        return ByteUtils.combine(width, height, pix);
     }
 
     @Override
