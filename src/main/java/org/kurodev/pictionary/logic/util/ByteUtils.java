@@ -20,18 +20,19 @@ public class ByteUtils {
         return b;
     }
 
-    public static int[][] byteToInt(byte[] bytes, int width, int height) {
+    public static int[][] byteToInt2D(byte[] bytes, int width, int height) {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         int[][] out = new int[width][height];
         for (int x = 0; x < out.length; x++) {
             for (int y = 0; y < out[0].length; y++) {
                 byte[] integer = new byte[4];
                 try {
+                    //noinspection ResultOfMethodCallIgnored
                     bis.read(integer);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                int val =byteToInt(integer);
+                int val = byteToInt(integer);
                 out[x][y] = val;
             }
         }

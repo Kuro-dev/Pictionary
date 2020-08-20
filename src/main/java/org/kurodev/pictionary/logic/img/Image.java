@@ -77,7 +77,7 @@ public class Image implements Encodable {
     public void decode(byte[] bytes) {
         width = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 0, 4));
         height = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 4, 8));
-        pixels = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 8, bytes.length), width, height);
+        pixels = ByteUtils.byteToInt2D(Arrays.copyOfRange(bytes, 8, bytes.length), width, height);
     }
 
     @Override
