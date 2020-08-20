@@ -65,7 +65,7 @@ public class Pixel implements Encodable {
 
     @Override
     public byte[] encode() {
-        byte[] out = new byte[24];
+        byte[] out = new byte[12];
         System.arraycopy(ByteUtils.intToByte(this.x), 0, out, 0, 4);
         System.arraycopy(ByteUtils.intToByte(this.y), 0, out, 4, 4);
         System.arraycopy(ByteUtils.intToByte(this.argb), 0, out, 8, 4);

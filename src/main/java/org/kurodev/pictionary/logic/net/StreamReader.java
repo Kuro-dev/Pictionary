@@ -1,9 +1,13 @@
 package org.kurodev.pictionary.logic.net;
 
+import org.kurodev.pictionary.logic.net.encoding.Code;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.interfaces.NetworkCallback;
+import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * @author kuro
@@ -20,14 +24,27 @@ public class StreamReader implements Runnable {
     @Override
     public void run() {
         try {
-            int len = in.read();
-            byte[] bytes = new byte[len];
-           int readBytes = in.read(bytes);
-            if (readBytes != len) {
-                System.err.println("something went wrong in stream reader");
-            }
+            callback.onObjectReceived(interpret(read()));
         } catch (IOException e) {
             callback.onConnectionLost(e);
         }
+    }
+
+    public byte[] read() throws IOException {
+        byte[] buf = new byte[4];
+        in.read(buf);
+        int len = ByteUtils.byteToInt(buf);
+        byte[] bytes = new byte[len];
+        int readBytes = in.read(bytes);
+        if (readBytes != len) {
+            System.err.println("something went wrong in stream reader");
+        }
+        return bytes;
+    }
+
+    public Encodable interpret(byte[] bytes) {
+        Code code = Code.get(bytes[0]);
+        byte[] obj = Arrays.copyOfRange(bytes, 1, bytes.length);
+        return code.construct(obj);
     }
 }

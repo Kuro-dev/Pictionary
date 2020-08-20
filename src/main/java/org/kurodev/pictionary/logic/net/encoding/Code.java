@@ -1,14 +1,18 @@
 package org.kurodev.pictionary.logic.net.encoding;
 
+import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
-import org.kurodev.pictionary.logic.timer.Countdown;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 /**
  * @author kuro
  **/
 public enum Code {
     PIXEL(Pixel.class),
-    COUNTDOWN(Countdown.class);
+    IMAGE(Image.class);
 
     private final Class<? extends Encodable> clazz;
 
@@ -25,5 +29,39 @@ public enum Code {
             }
         }
         throw new EncodingException("Couldn't identify " + obj);
+    }
+
+    public static Code get(byte aByte) {
+        int o = Byte.toUnsignedInt(aByte);
+        for (Code value : Code.values()) {
+            if (value.ordinal() == o) {
+                return value;
+            }
+        }
+        throw new RuntimeException("Code not found: " + o);
+    }
+
+    public Encodable construct(byte[] b) {
+        try {
+            for (Constructor<?> constructor : clazz.getConstructors()) {
+                Class<?>[] types = constructor.getParameterTypes();
+                if (types.length == 1 && types[0] == byte[].class) {
+                    System.out.printf("Invoking byte constructor for %s.class\n", clazz.getSimpleName());
+                    return (Encodable) constructor.newInstance((Object) b);
+                }
+            }
+            for (Constructor<?> constructor : clazz.getConstructors()) {
+                Class<?>[] types = constructor.getParameterTypes();
+                if (types.length == 0) {
+                    System.out.printf("Invoking default constructor for %s.class\n", clazz.getSimpleName());
+                    Encodable e = (Encodable) constructor.newInstance();
+                    e.decode(b);
+                    return e;
+                }
+            }
+            throw new RuntimeException("Could not decode " + Arrays.toString(b));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

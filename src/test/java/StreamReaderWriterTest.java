@@ -1,0 +1,55 @@
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.kurodev.pictionary.logic.img.Image;
+import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.StreamReader;
+import org.kurodev.pictionary.logic.net.StreamWriter;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import static org.junit.Assert.*;
+
+/**
+ * @author kuro
+ **/
+@RunWith(JUnitParamsRunner.class)
+public class StreamReaderWriterTest {
+    public void testStreamRead(Encodable e) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        StreamWriter writer = new StreamWriter(bos);
+        writer.write(e);
+        byte[] bytes = bos.toByteArray();
+        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+        assertEquals(bytes.length, bis.available());
+        StreamReader reader = new StreamReader(bis, null);
+        Encodable copy = reader.interpret(reader.read());
+        assertEquals(e, copy);
+    }
+
+    @Test
+    public void canReadAndWritePixelsFromStreams() throws IOException {
+        Pixel pix = new Pixel(5, 6, 7);
+        testStreamRead(pix);
+    }
+
+    @Test
+    @Parameters({"1,2", "3,5", "5,8", "2,15", "10,6", "15,12", "15,15", "10,10"})
+    public void testImageStreamReadWrite(int width, int height) throws IOException {
+        Image image = new Image(width, height);
+        testStreamRead(image);
+    }
+
+    @Test
+    public void testImageTransmitPixels() throws IOException {
+        Image image = new Image(4, 3);
+        image.write(3, 2, 225);
+        assertTrue(image.isTransparent(0, 0));
+        assertFalse(image.isTransparent(3, 2));
+        testStreamRead(image);
+    }
+}
