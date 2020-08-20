@@ -1,5 +1,6 @@
 package org.kurodev.pictionary.logic.img;
 
+import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
@@ -22,7 +23,7 @@ public class Image implements Encodable {
      *
      * @param bytes representation resulting from {@link #encode()}
      */
-    public Image(byte[] bytes) {
+    public Image(EasyByteStream bytes) {
         decode(bytes);
     }
 
@@ -79,10 +80,11 @@ public class Image implements Encodable {
     }
 
     @Override
-    public void decode(byte[] bytes) {
-        width = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 0, 4));
-        height = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 4, 8));
-        pixels = ByteUtils.byteToInt2D(Arrays.copyOfRange(bytes, 8, bytes.length), width, height);
+    public void decode(EasyByteStream data) {
+        width = data.readInt();
+        height = data.readInt();
+        byte[] remaining = data.readRemaining();
+        pixels = ByteUtils.byteToInt2D(remaining, width, height);
     }
 
     @Override

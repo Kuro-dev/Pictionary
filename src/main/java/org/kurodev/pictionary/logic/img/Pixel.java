@@ -1,9 +1,9 @@
 package org.kurodev.pictionary.logic.img;
 
+import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -18,10 +18,10 @@ public class Pixel implements Encodable {
     /**
      * Applies the state from the given bytes and inherits them into this instance.
      *
-     * @param bytes representation resulting from {@link #encode()}
+     * @param data representation resulting from {@link #encode()}
      */
-    public Pixel(byte[] bytes) {
-        decode(bytes);
+    public Pixel(EasyByteStream data) {
+        decode(data);
     }
 
     public Pixel() {
@@ -62,15 +62,14 @@ public class Pixel implements Encodable {
     }
 
     @Override
-    public void decode(byte[] bytes) {
-        x = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 0, 4));
-        y = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 4, 8));
-        argb = ByteUtils.byteToInt(Arrays.copyOfRange(bytes, 8, 12));
+    public void decode(EasyByteStream data) {
+        x = data.readInt();
+        y = data.readInt();
+        argb = data.readInt();
     }
 
     @Override
     public byte[] encode() {
-        byte[] out = new byte[12];
         byte[] x = ByteUtils.intToByte(this.x);
         byte[] y = ByteUtils.intToByte(this.y);
         byte[] argb = ByteUtils.intToByte(this.argb);

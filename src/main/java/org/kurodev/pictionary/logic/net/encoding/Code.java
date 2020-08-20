@@ -44,12 +44,13 @@ public enum Code {
     }
 
     public Encodable construct(byte[] encoded) {
+        EasyByteStream stream = new EasyByteStream(encoded);
         try {
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
                 if (types.length == 1 && types[0] == byte[].class) {
                     //System.out.printf("Invoking byte constructor for %s.class\n", clazz.getSimpleName());
-                    return (Encodable) constructor.newInstance((Object) encoded);
+                    return (Encodable) constructor.newInstance(stream);
                 }
             }
             for (Constructor<?> constructor : clazz.getConstructors()) {
@@ -57,7 +58,7 @@ public enum Code {
                 if (types.length == 0) {
                     //System.out.printf("Invoking default constructor for %s.class\n", clazz.getSimpleName());
                     Encodable e = (Encodable) constructor.newInstance();
-                    e.decode(encoded);
+                    e.decode(stream);
                     return e;
                 }
             }

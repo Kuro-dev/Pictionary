@@ -12,6 +12,10 @@ public class Countdown extends TimerTask {
     private final TimerCallback callback;
     private int currentTime;
 
+    public Countdown(int time) {
+        this(time, null);
+    }
+
     public Countdown(int time, TimerCallback callback) {
 
         this.time = time;
@@ -19,10 +23,15 @@ public class Countdown extends TimerTask {
         this.callback = callback;
     }
 
+    public int getCurrentTime() {
+        return currentTime;
+    }
+
     @Override
     public void run() {
         currentTime -= 1;
-        callback.onTimerChanged(currentTime);
+        if (callback != null)
+            callback.onTimerChanged(currentTime);
         if (currentTime <= 0) {
             stop();
         }

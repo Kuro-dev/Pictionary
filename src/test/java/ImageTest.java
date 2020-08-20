@@ -22,7 +22,8 @@ public class ImageTest {
     public void pixelEncodingWorks() {
         Pixel pix = new Pixel(2, 5, 241515);
         byte[] code = pix.encode();
-        Pixel pix1 = new Pixel(code);
+        Pixel pix1 = new Pixel();
+        pix1.decode(code);
         assertEquals(pix, pix1);
     }
 

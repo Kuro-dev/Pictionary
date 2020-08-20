@@ -32,6 +32,7 @@ public class StreamReader implements Runnable {
 
     public byte[] read() throws IOException {
         byte[] buf = new byte[4];
+        //noinspection ResultOfMethodCallIgnored
         in.read(buf);
         int len = ByteUtils.byteToInt(buf);
         byte[] bytes = new byte[len];
@@ -43,7 +44,8 @@ public class StreamReader implements Runnable {
     }
 
     public Encodable interpret(byte[] bytes) {
-        Code code = Code.get(bytes[0]);
+        final int codeIndex = 0;
+        Code code = Code.get(bytes[codeIndex]);
         byte[] obj = Arrays.copyOfRange(bytes, 1, bytes.length);
         return code.construct(obj);
     }
