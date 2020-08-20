@@ -15,6 +15,11 @@ public class Pixel implements Encodable {
     private int y;
     private int argb;
 
+    /**
+     * Applies the state from the given bytes and inherits them into this instance.
+     *
+     * @param bytes representation resulting from {@link #encode()}
+     */
     public Pixel(byte[] bytes) {
         decode(bytes);
     }
@@ -66,10 +71,10 @@ public class Pixel implements Encodable {
     @Override
     public byte[] encode() {
         byte[] out = new byte[12];
-        System.arraycopy(ByteUtils.intToByte(this.x), 0, out, 0, 4);
-        System.arraycopy(ByteUtils.intToByte(this.y), 0, out, 4, 4);
-        System.arraycopy(ByteUtils.intToByte(this.argb), 0, out, 8, 4);
-        return out;
+        byte[] x = ByteUtils.intToByte(this.x);
+        byte[] y = ByteUtils.intToByte(this.y);
+        byte[] argb = ByteUtils.intToByte(this.argb);
+        return ByteUtils.combine(x, y, argb);
     }
 
     @Override
