@@ -1,5 +1,6 @@
 package org.kurodev.pictionary.logic.net.encoding;
 
+import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 
@@ -12,7 +13,8 @@ import java.util.Arrays;
  **/
 public enum Code {
     PIXEL(Pixel.class),
-    IMAGE(Image.class);
+    IMAGE(Image.class),
+    GAME(Pictionary.class);
 
     private final Class<? extends Encodable> clazz;
 
@@ -41,25 +43,25 @@ public enum Code {
         throw new RuntimeException("Code not found: " + o);
     }
 
-    public Encodable construct(byte[] b) {
+    public Encodable construct(byte[] encoded) {
         try {
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
                 if (types.length == 1 && types[0] == byte[].class) {
-                    System.out.printf("Invoking byte constructor for %s.class\n", clazz.getSimpleName());
-                    return (Encodable) constructor.newInstance((Object) b);
+                    //System.out.printf("Invoking byte constructor for %s.class\n", clazz.getSimpleName());
+                    return (Encodable) constructor.newInstance((Object) encoded);
                 }
             }
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
                 if (types.length == 0) {
-                    System.out.printf("Invoking default constructor for %s.class\n", clazz.getSimpleName());
+                    //System.out.printf("Invoking default constructor for %s.class\n", clazz.getSimpleName());
                     Encodable e = (Encodable) constructor.newInstance();
-                    e.decode(b);
+                    e.decode(encoded);
                     return e;
                 }
             }
-            throw new RuntimeException("Could not decode " + Arrays.toString(b));
+            throw new RuntimeException("Could not decode " + Arrays.toString(encoded));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
