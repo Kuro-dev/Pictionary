@@ -42,4 +42,26 @@ public class ByteUtils {
     public static byte[] intToByte(int i) {
         return ByteBuffer.allocate(4).putInt(i).array();
     }
+
+    public static byte[] combine(byte[]... bytes) {
+        int size = 0;
+        for (byte[] aByte : bytes) {
+            size += aByte.length;
+        }
+        byte[] out = new byte[size];
+        int x = 0;
+        for (byte[] aByteArray : bytes) {
+            System.arraycopy(aByteArray, 0, out, x, aByteArray.length);
+            x += aByteArray.length;
+        }
+        return out;
+    }
+
+    public static byte[] charToByte(char[] chars) {
+        byte[] b = new byte[chars.length];
+        for (int i = 0; i < b.length; i++) {
+            b[i] = (byte) chars[i];
+        }
+        return b;
+    }
 }
