@@ -13,7 +13,7 @@ public class StringEncoder {
     //Changing this value will affect the tests.
     private static final char[] DELIMITER = {0x2};
 
-    public byte[] encode(String... strings) {
+    public static byte[] encode(String... strings) {
         StringBuilder out = new StringBuilder();
         for (String string : strings) {
             out.append(DELIMITER).append(string);
@@ -22,13 +22,13 @@ public class StringEncoder {
         return out.toString().getBytes(StandardCharsets.UTF_8);
     }
 
-    public byte[] encode(String string) {
+    public static byte[] encode(String string) {
         StringBuilder b = new StringBuilder(30);
         char[] del = DELIMITER;
         return b.append(del).append(string).append(del).toString().getBytes(StandardCharsets.UTF_8);
     }
 
-    public String[] decode(byte[] bytes) {
+    public static String[] decode(byte[] bytes) {
         String delimiter = new String(DELIMITER);
         String string = new String(bytes);
         String[] strings = string.split(delimiter);
@@ -41,16 +41,16 @@ public class StringEncoder {
         return list.toArray(new String[0]);
     }
 
-    private byte peek(PushbackInputStream in) {
+    private static byte peek(PushbackInputStream in) {
         return peek(in, 1)[0];
     }
 
-    public String decodeNextString(byte[] bytes) {
+    public static String decodeNextString(byte[] bytes) {
         return decode(bytes)[0];
     }
 
     @SuppressWarnings("SameParameterValue")
-    private byte[] peek(PushbackInputStream in, int length) {
+    private static byte[] peek(PushbackInputStream in, int length) {
         byte[] b = new byte[length];
         if (length > 0) {
             try {

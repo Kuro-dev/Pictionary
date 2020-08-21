@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author kuro
  **/
 public class Pictionary implements Encodable {
-    private final StringEncoder encoder = new StringEncoder();
     private final Countdown timer;
     private int timerTime;
     private String word;
@@ -60,12 +59,12 @@ public class Pictionary implements Encodable {
     @Override
     public void decode(EasyByteStream data) {
         timerTime = data.readInt();
-        word = encoder.decodeNextString(data.readRemaining());
+        word = StringEncoder.decodeNextString(data.readRemaining());
     }
 
     @Override
     public byte[] encode() {
-        byte[] word = encoder.encode(this.word);
+        byte[] word = StringEncoder.encode(this.word);
         byte[] timer = ByteUtils.intToByte(timerTime);
         return ByteUtils.combine(timer, word);
     }
