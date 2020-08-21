@@ -40,7 +40,7 @@ public enum Code {
                 return value;
             }
         }
-        throw new RuntimeException("Code not found: " + o);
+        throw new EncodingException("Code not found: " + o);
     }
 
     public Encodable construct(byte[] encoded) {
@@ -49,22 +49,20 @@ public enum Code {
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
                 if (types.length == 1 && types[0] == byte[].class) {
-                    //System.out.printf("Invoking byte constructor for %s.class\n", clazz.getSimpleName());
                     return (Encodable) constructor.newInstance(stream);
                 }
             }
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
                 if (types.length == 0) {
-                    //System.out.printf("Invoking default constructor for %s.class\n", clazz.getSimpleName());
                     Encodable e = (Encodable) constructor.newInstance();
                     e.decode(stream);
                     return e;
                 }
             }
-            throw new RuntimeException("Could not decode " + Arrays.toString(encoded));
+            throw new EncodingException("Could not decode " + Arrays.toString(encoded));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            throw new EncodingException(e);
         }
     }
 }
