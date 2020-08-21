@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class Countdown extends TimerTask {
     private final Timer timer = new Timer();
     private final int time;
-    private final TimerCallback callback;
+    private TimerCallback callback;
     private int currentTime;
 
     public Countdown(int time) {
@@ -20,6 +20,10 @@ public class Countdown extends TimerTask {
 
         this.time = time;
         currentTime = time;
+        this.callback = callback;
+    }
+
+    public void setCallback(TimerCallback callback) {
         this.callback = callback;
     }
 
