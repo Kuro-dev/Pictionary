@@ -1,5 +1,7 @@
-package org.kurodev.pictionary.logic.net;
+package org.kurodev.pictionary.logic.net.communication;
 
+import org.kurodev.pictionary.logic.net.stream.StreamReader;
+import org.kurodev.pictionary.logic.net.stream.StreamWriter;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.interfaces.NetworkCallback;
 

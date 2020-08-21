@@ -5,9 +5,9 @@ import org.junit.runner.RunWith;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
-import org.kurodev.pictionary.logic.net.StreamReader;
-import org.kurodev.pictionary.logic.net.StreamWriter;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
+import org.kurodev.pictionary.logic.net.stream.StreamReader;
+import org.kurodev.pictionary.logic.net.stream.StreamWriter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

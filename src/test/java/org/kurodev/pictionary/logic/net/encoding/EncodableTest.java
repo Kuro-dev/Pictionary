@@ -1,9 +1,13 @@
 package org.kurodev.pictionary.logic.net.encoding;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.stream.Message;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -11,6 +15,7 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * @author kuro
  **/
+@RunWith(JUnitParamsRunner.class)
 public class EncodableTest {
     private static void run(Encodable e, Encodable e2) {
         assertNotEquals(e, e2);
@@ -36,6 +41,14 @@ public class EncodableTest {
     public void pictionaryTest() {
         Encodable expected = new Pictionary("Hello World");
         Encodable actual = new Pictionary();
+        run(expected, actual);
+    }
+
+    @Test
+    @Parameters({"hello world", "test\n\n\n\n\n\ntest", "test\r\r\r\r\r\n\n", "__.d^1^#üa^°°@@}\\=?"})
+    public void messageTest(String msg) {
+        Encodable expected = new Message(msg);
+        Encodable actual = new Message("");
         run(expected, actual);
     }
 }

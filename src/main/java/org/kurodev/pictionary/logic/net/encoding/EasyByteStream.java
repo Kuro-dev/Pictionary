@@ -28,6 +28,16 @@ public class EasyByteStream extends ByteArrayInputStream {
         return n;
     }
 
+    public long readLong() {
+        byte[] n = new byte[8];
+        try {
+            read(n);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return ByteUtils.byteToLong(n);
+    }
+
     public int readInt() {
         byte[] n = new byte[4];
         try {

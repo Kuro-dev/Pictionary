@@ -20,6 +20,10 @@ public class ByteUtils {
         return b;
     }
 
+    public static byte[] intToByte(int i) {
+        return ByteBuffer.allocate(4).putInt(i).array();
+    }
+
     public static int[][] byteToInt2D(byte[] bytes, int width, int height) {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         int[][] out = new int[width][height];
@@ -39,10 +43,6 @@ public class ByteUtils {
         return out;
     }
 
-    public static byte[] intToByte(int i) {
-        return ByteBuffer.allocate(4).putInt(i).array();
-    }
-
     public static byte[] combine(byte[]... bytes) {
         int size = 0;
         for (byte[] aByte : bytes) {
@@ -57,4 +57,11 @@ public class ByteUtils {
         return out;
     }
 
+    public static long byteToLong(byte[] n) {
+        return ByteBuffer.wrap(n).getLong();
+    }
+
+    public static byte[] longToByte(long i) {
+        return ByteBuffer.allocate(8).putLong(i).array();
+    }
 }

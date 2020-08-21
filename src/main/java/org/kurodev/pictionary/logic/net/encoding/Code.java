@@ -48,7 +48,7 @@ public enum Code {
         try {
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
-                if (types.length == 1 && types[0] == byte[].class) {
+                if (types.length == 1 && types[0] == EasyByteStream.class) {
                     return (Encodable) constructor.newInstance(stream);
                 }
             }

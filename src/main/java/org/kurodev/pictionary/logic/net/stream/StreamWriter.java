@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.logic.net;
+package org.kurodev.pictionary.logic.net.stream;
 
 import org.kurodev.pictionary.logic.net.encoding.Code;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
