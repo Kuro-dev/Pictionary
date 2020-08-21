@@ -3,9 +3,9 @@ package org.kurodev.pictionary.logic;
 import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.StringEncoder;
+import org.kurodev.pictionary.logic.timer.Countdown;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -13,16 +13,19 @@ import java.util.Objects;
  **/
 public class Pictionary implements Encodable {
     private final StringEncoder encoder = new StringEncoder();
+    private final Countdown timer;
     private int timerTime;
     private String word;
+    private boolean won = false;
 
     public Pictionary(String word, int time) {
         this.word = word;
         timerTime = time;
+        timer = new Countdown(time);
     }
 
     public Pictionary(int time) {
-        timerTime = time;
+        this("", time);
     }
 
     public Pictionary() {
@@ -41,21 +44,9 @@ public class Pictionary implements Encodable {
         return Objects.equals(word, that.word);
     }
 
-    public void submit(String other) {
-
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(word);
-    }
-
-    public boolean matches(String solution) {
-        return word.equalsIgnoreCase(solution);
-    }
-
-    public String getWord() {
-        return word;
     }
 
     @Override
@@ -77,5 +68,26 @@ public class Pictionary implements Encodable {
         byte[] word = encoder.encode(this.word);
         byte[] timer = ByteUtils.intToByte(timerTime);
         return ByteUtils.combine(timer, word);
+    }
+
+    public boolean isWon() {
+        return won;
+    }
+
+    public boolean isGameOver() {
+        return won || timer.getCurrentTime() == 0;
+    }
+
+    public void submit(String solution) {
+        if (!won)
+            won = word.equalsIgnoreCase(solution);
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public Countdown getTimer() {
+        return timer;
     }
 }
