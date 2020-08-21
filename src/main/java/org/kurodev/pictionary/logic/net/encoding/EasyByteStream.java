@@ -8,6 +8,7 @@ import java.io.IOException;
 /**
  * @author kuro
  **/
+@SuppressWarnings("ALL")
 public class EasyByteStream extends ByteArrayInputStream {
     public EasyByteStream(byte[] buf) {
         super(buf);
