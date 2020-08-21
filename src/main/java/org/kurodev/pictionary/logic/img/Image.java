@@ -88,20 +88,20 @@ public class Image implements Encodable {
     }
 
     @Override
+    public byte[] encode() {
+        byte[] width = ByteUtils.intToByte(this.width);
+        byte[] height = ByteUtils.intToByte(this.height);
+        byte[] pix = ByteUtils.intToByte(this.getImage());
+        return ByteUtils.combine(width, height, pix);
+    }
+
+    @Override
     public String toString() {
         return "Image{" +
                 "width=" + width +
                 ", height=" + height +
                 ", pixels=" + Arrays.toString(getImage()) +
                 '}';
-    }
-
-    @Override
-    public byte[] encode() {
-        byte[] width = ByteUtils.intToByte(this.width);
-        byte[] height = ByteUtils.intToByte(this.height);
-        byte[] pix = ByteUtils.intToByte(this.getImage());
-        return ByteUtils.combine(width, height, pix);
     }
 
     @Override
