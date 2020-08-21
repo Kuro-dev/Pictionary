@@ -27,6 +27,10 @@ public class Countdown extends TimerTask {
         return currentTime;
     }
 
+    public int getInitialTime() {
+        return time;
+    }
+
     @Override
     public void run() {
         currentTime -= 1;

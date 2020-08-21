@@ -57,11 +57,4 @@ public class ByteUtils {
         return out;
     }
 
-    public static byte[] charToByte(char[] chars) {
-        byte[] b = new byte[chars.length];
-        for (int i = 0; i < b.length; i++) {
-            b[i] = (byte) chars[i];
-        }
-        return b;
-    }
 }

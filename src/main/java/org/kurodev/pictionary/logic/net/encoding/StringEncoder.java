@@ -1,7 +1,5 @@
 package org.kurodev.pictionary.logic.net.encoding;
 
-import org.kurodev.pictionary.logic.util.ByteUtils;
-
 import java.io.IOException;
 import java.io.PushbackInputStream;
 import java.nio.charset.StandardCharsets;
@@ -51,6 +49,7 @@ public class StringEncoder {
         return decode(bytes)[0];
     }
 
+    @SuppressWarnings("SameParameterValue")
     private byte[] peek(PushbackInputStream in, int length) {
         byte[] b = new byte[length];
         if (length > 0) {

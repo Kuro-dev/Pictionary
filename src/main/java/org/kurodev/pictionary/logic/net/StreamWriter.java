@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  **/
 public class StreamWriter {
     private final OutputStream out;
-    Charset set = StandardCharsets.UTF_8;
+    final Charset set = StandardCharsets.UTF_8;
 
     public StreamWriter(OutputStream out) {
         this.out = out;

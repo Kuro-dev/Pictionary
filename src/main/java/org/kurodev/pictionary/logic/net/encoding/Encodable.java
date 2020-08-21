@@ -25,8 +25,6 @@ public interface Encodable {
      * many such objects have a constructor which will accept the bytes.
      *
      * @return bytecode representation of the object.
-     * @see org.kurodev.pictionary.logic.img.Image#Image(byte[])
-     * @see org.kurodev.pictionary.logic.img.Pixel#Pixel(byte[])
      */
     byte[] encode();
 }
