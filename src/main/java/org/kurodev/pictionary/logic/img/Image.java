@@ -98,9 +98,9 @@ public class Image implements Encodable {
     @Override
     public String toString() {
         return "Image{" +
-                "width=" + width +
-                ", height=" + height +
-                ", pixels=" + Arrays.toString(getImage()) +
+                "  width=  " + width +
+                "  height= " + height +
+                "  pixels= " + Arrays.toString(getImage()) +
                 '}';
     }
 
