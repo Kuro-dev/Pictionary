@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.logic.timer;
+package org.kurodev.pictionary.logic.callbacks;
 
 /**
  * @author kuro

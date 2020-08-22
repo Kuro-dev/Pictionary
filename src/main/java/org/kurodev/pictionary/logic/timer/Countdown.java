@@ -1,5 +1,7 @@
 package org.kurodev.pictionary.logic.timer;
 
+import org.kurodev.pictionary.logic.callbacks.TimerCallback;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,15 +40,20 @@ public class Countdown extends TimerTask {
     @Override
     public void run() {
         currentTime -= 1;
-        if (callback != null)
-            callback.onTimerChanged(currentTime);
+        inform();
         if (currentTime <= 0) {
             stop();
         }
     }
 
+    private void inform() {
+        if (callback != null)
+            callback.onTimerChanged(currentTime);
+    }
+
     public void reset() {
         currentTime = time;
+        inform();
     }
 
     public void start() {

@@ -18,6 +18,11 @@ public class Message implements Encodable {
         decode(bytes);
     }
 
+    public Message(String msg) {
+        time = System.currentTimeMillis();
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -38,11 +43,6 @@ public class Message implements Encodable {
     @Override
     public int hashCode() {
         return Objects.hash(msg, time);
-    }
-
-    public Message(String msg) {
-        time = System.currentTimeMillis();
-        this.msg = msg;
     }
 
     @Override

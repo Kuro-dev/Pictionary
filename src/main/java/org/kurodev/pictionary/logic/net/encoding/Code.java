@@ -3,6 +3,7 @@ package org.kurodev.pictionary.logic.net.encoding;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.stream.Message;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +15,8 @@ import java.util.Arrays;
 public enum Code {
     PIXEL(Pixel.class),
     IMAGE(Image.class),
-    GAME(Pictionary.class);
+    GAME(Pictionary.class),
+    MESSAGE(Message.class);
 
     private final Class<? extends Encodable> clazz;
 
@@ -34,13 +36,13 @@ public enum Code {
     }
 
     public static Code get(byte aByte) {
-        int o = Byte.toUnsignedInt(aByte);
+        int searched = Byte.toUnsignedInt(aByte);
         for (Code value : Code.values()) {
-            if (value.ordinal() == o) {
+            if (value.ordinal() == searched) {
                 return value;
             }
         }
-        throw new EncodingException("Code not found: " + o);
+        throw new EncodingException("Code not found: " + searched);
     }
 
     public Encodable construct(byte[] encoded) {
