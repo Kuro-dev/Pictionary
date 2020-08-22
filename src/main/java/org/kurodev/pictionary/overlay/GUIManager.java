@@ -75,4 +75,10 @@ public class GUIManager {
         });
 
     }
+
+    public static void setTime(int min, int sec) {
+
+        instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
+    }
+
 }

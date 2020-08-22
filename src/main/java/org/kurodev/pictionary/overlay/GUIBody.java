@@ -3,12 +3,10 @@ package org.kurodev.pictionary.overlay;
 import org.kurodev.pictionary.overlay.factory.GBC;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicListUI;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class GUIBody {
@@ -29,6 +27,7 @@ public class GUIBody {
     JPanel pan_lft_mid, pan_mid_mid, pan_rht_mid;
     GridBagLayout lay_pan_lft_mid, lay_pan_mid_mid, lay_pan_rht_mid;
 
+    JLabel lbl_timer_lft_mid;
     JButton[] buttons;
 
     JButton drawing_pane;
@@ -77,6 +76,8 @@ public class GUIBody {
         pan_bot = new JPanel(lay_pan_bot = new GridBagLayout());
         pan_bot.setBackground(Color.lightGray);
 
+        lbl_timer_lft_mid = new JLabel("00:00");
+        lbl_timer_lft_mid.setFont(new Font("calibri", Font.BOLD, 45));
         buttons = getButtons(List.of(Color.WHITE, Color.BLUE, Color.ORANGE, Color.BLACK, Color.GREEN, Color.CYAN, Color.DARK_GRAY, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA, Color.PINK, Color.RED, Color.YELLOW));
 
         drawing_pane = new JButton();
@@ -140,16 +141,11 @@ public class GUIBody {
         lay_pan_mid.setConstraints(pan_mid_mid, new GBC().setGridx(1).setWeighty(1).setWeightx(0.5).setFill(GBC.BOTH));
         lay_pan_mid.setConstraints(pan_rht_mid, new GBC().setGridx(2).setWeighty(1).setWeightx(1.5).setFill(GBC.BOTH));
 
+        lay_pan_bot.setConstraints(lbl_timer_lft_mid, new GBC().setGridheight(2).setInsets(new Insets(0, 0, 0, 20)));
         for (int i = 0; i < buttons.length; i += 2) {
-            lay_pan_bot.setConstraints(buttons[i], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2).setGridy(0));
-            lay_pan_bot.setConstraints(buttons[i + 1], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2).setGridy(1));
+            lay_pan_bot.setConstraints(buttons[i], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2 + 1).setGridy(0));
+            lay_pan_bot.setConstraints(buttons[i + 1], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2 + 1).setGridy(1));
         }
-
-//        JScrollPane pan_scp_rht_mid;
-//        JTextArea txt_scp_rht_mid;
-//
-//        JTextField fie_scp_rht_mid;
-//        JButton but_scp_rht_mid;
 
         lay_pan_rht_mid.setConstraints(pan_scp_rht_mid, new GBC().setGridwidth(2).setWeighty(1).setWeightx(1).setFill(GBC.BOTH));
 
@@ -178,6 +174,7 @@ public class GUIBody {
 
         frame.add(pan_mid);
 
+        pan_bot.add(lbl_timer_lft_mid);
         for (int i = 0; i < buttons.length; i++)
             pan_bot.add(buttons[i]);
 
