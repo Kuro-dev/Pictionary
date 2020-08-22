@@ -35,7 +35,7 @@ public class GUIBody {
     DrawEventHandler draw_event_handle;
 
     JScrollPane pan_scp_rht_mid;
-    JTextArea txt_scp_rht_mid;
+    JEditorPane txt_scp_rht_mid;
 
     JTextField fie_scp_rht_mid;
     JButton but_scp_rht_mid;
@@ -91,13 +91,14 @@ public class GUIBody {
         for (JButton button : buttons)
             button.addActionListener(e -> draw_event_handle.setColor(button.getBackground()));
 
-        pan_scp_rht_mid = new JScrollPane(txt_scp_rht_mid = new JTextArea());
+        pan_scp_rht_mid = new JScrollPane(txt_scp_rht_mid = new JEditorPane());
         txt_scp_rht_mid.setEditable(false);
+        txt_scp_rht_mid.setContentType("text/html");
 
         fie_scp_rht_mid = new JTextField();
         but_scp_rht_mid = new JButton();
         but_scp_rht_mid.addActionListener(e -> {
-            txt_scp_rht_mid.append(name + ": " + fie_scp_rht_mid.getText() + "\n");
+            GUIManager.sendChat(name, fie_scp_rht_mid.getText());
             fie_scp_rht_mid.setText("");
         });
         fie_scp_rht_mid.addKeyListener(new KeyAdapter() {
