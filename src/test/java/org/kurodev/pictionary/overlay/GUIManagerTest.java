@@ -24,8 +24,6 @@ public class GUIManagerTest {
         GUIManager.sendChat("Hey","Mellow");
         GUIManager.sendChat("May","Bruh");
 
-        GUIManager.setTime(4, 5);
-
     }
 
     public static void main(String[] args) {
