@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author kuro
  **/
 public class NetworkHandler {
+    public static final int DEFAULT_PORT = 9876;
     private final ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
     private final Socket socket;
     private final NetworkCallback callback;
@@ -29,6 +30,10 @@ public class NetworkHandler {
     public static NetworkHandler create(String ip, int port, NetworkCallback callback) throws IOException {
         Socket socket = new Socket(ip, port);
         return create(socket, callback);
+    }
+
+    public static NetworkHandler create(String ip, NetworkCallback callback) throws IOException {
+        return create(ip, DEFAULT_PORT, callback);
     }
 
     public static NetworkHandler create(Socket soc, NetworkCallback callback) throws IOException {
