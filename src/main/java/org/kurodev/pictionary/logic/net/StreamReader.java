@@ -14,7 +14,7 @@ import java.util.Arrays;
  **/
 public class StreamReader implements Runnable {
     private final InputStream in;
-    private final NetworkCallback callback;
+    private NetworkCallback callback;
 
     public StreamReader(InputStream in, NetworkCallback callback) {
         this.in = in;
@@ -48,5 +48,9 @@ public class StreamReader implements Runnable {
         Code code = Code.get(bytes[codeIndex]);
         byte[] obj = Arrays.copyOfRange(bytes, 1, bytes.length);
         return code.construct(obj);
+    }
+
+    public void setCallback(NetworkCallback callback) {
+    this.callback = callback;
     }
 }
