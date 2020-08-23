@@ -2,9 +2,9 @@ package org.kurodev.pictionary.logic.util;
 
 public class Participant {
 
-    public String name;
-    public int score;
-    public String colour;
+    private String name;
+    private int score;
+    private String colour;
 
     public Participant(String name, int score) {
         if (name.length() > 9) name = name.substring(0, 9);
@@ -12,5 +12,17 @@ public class Participant {
         this.score = score;
         this.colour = RandomColor.getHex();
         System.out.println(colour);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getColour() {
+        return colour;
     }
 }
