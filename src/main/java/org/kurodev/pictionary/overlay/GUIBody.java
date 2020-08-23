@@ -2,13 +2,16 @@ package org.kurodev.pictionary.overlay;
 
 import org.kurodev.pictionary.overlay.factory.GBC;
 
+import javax.accessibility.AccessibleExtendedText;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicListUI;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.color.ColorSpace;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class GUIBody {
@@ -29,6 +32,7 @@ public class GUIBody {
     JPanel pan_lft_mid, pan_mid_mid, pan_rht_mid;
     GridBagLayout lay_pan_lft_mid, lay_pan_mid_mid, lay_pan_rht_mid;
 
+    JLabel lbl_timer_lft_mid;
     JButton[] buttons;
 
     JButton drawing_pane;
@@ -58,25 +62,37 @@ public class GUIBody {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         pan_top = new JPanel();
-        pan_top.setBackground(Color.darkGray);
+        pan_top.setBackground(Color.decode("#66DDAA"));
         lay_pan_top = new GridBagLayout();
         pan_top.setLayout(lay_pan_top);
 
         lbl_icon_top = new JLabel(getIcon());
         lbl_hint_top = new JLabel("WATERMELON");
+        lbl_hint_top.setFont(new Font("Calibri", Font.BOLD, 30));
 
         pan_mid = new JPanel(lay_pan_mid = new GridBagLayout());
         pan_mid.setBackground(Color.gray);
         pan_mid.setLayout(lay_pan_mid);
 
         pan_lft_mid = new JPanel(lay_pan_lft_mid = new GridBagLayout());
+        pan_lft_mid.setBackground(Color.decode("#7FFFD7"));
+        pan_lft_mid.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+
         pan_mid_mid = new JPanel(lay_pan_mid_mid = new GridBagLayout());
-        pan_mid_mid.setBackground(Color.GREEN);
+        pan_mid_mid.setBackground(Color.decode("#2169BA"));
+
         pan_rht_mid = new JPanel(lay_pan_rht_mid = new GridBagLayout());
+        pan_rht_mid.setBackground(Color.decode("#7FFFD7"));
+        pan_rht_mid.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
         pan_bot = new JPanel(lay_pan_bot = new GridBagLayout());
-        pan_bot.setBackground(Color.lightGray);
+        pan_bot.setBackground(Color.decode("#46C696"));
+//        LineBorder b = new LineBorder(Color.BLACK, 3);
+        MatteBorder b = new MatteBorder(0, 3, 3, 3, Color.BLACK);
+        pan_bot.setBorder(b);
 
+        lbl_timer_lft_mid = new JLabel("00:00");
+        lbl_timer_lft_mid.setFont(new Font("calibri", Font.BOLD, 45));
         buttons = getButtons(List.of(Color.WHITE, Color.BLUE, Color.ORANGE, Color.BLACK, Color.GREEN, Color.CYAN, Color.DARK_GRAY, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA, Color.PINK, Color.RED, Color.YELLOW));
 
         drawing_pane = new JButton();
@@ -92,8 +108,11 @@ public class GUIBody {
             button.addActionListener(e -> draw_event_handle.setColor(button.getBackground()));
 
         pan_scp_rht_mid = new JScrollPane(txt_scp_rht_mid = new JEditorPane());
+        pan_scp_rht_mid.setBackground(Color.decode("#7FFFD7"));
+        pan_scp_rht_mid.setBorder(null);
         txt_scp_rht_mid.setEditable(false);
         txt_scp_rht_mid.setContentType("text/html");
+        txt_scp_rht_mid.setBackground(Color.decode("#7FFFD7"));
 
         fie_scp_rht_mid = new JTextField();
         but_scp_rht_mid = new JButton();
@@ -130,8 +149,8 @@ public class GUIBody {
 
         frame.pack();
 
-        lay_pan_top.setConstraints(lbl_icon_top, new GBC().setWeightx(1).setInsets(new Insets(0, 20, 0, 0)).setAnchor(GBC.WEST));
-        lay_pan_top.setConstraints(lbl_hint_top, new GBC().setGridx(1).setAnchor(GBC.WEST).setInsets(new Insets(0, 0, 0, 100)));
+        lay_pan_top.setConstraints(lbl_icon_top, new GBC().setWeightx(1).setInsets(new Insets(20, 20, 20, 0)).setAnchor(GBC.WEST));
+        lay_pan_top.setConstraints(lbl_hint_top, new GBC().setGridx(1).setAnchor(GBC.SOUTHWEST).setInsets(new Insets(0, 0, 20, 100)));
 
         lay_pan_mid.setConstraints(pan_lft_mid, new GBC().setGridx(0).setWeighty(1).setWeightx(0.2).setFill(GBC.BOTH));
 
@@ -140,16 +159,11 @@ public class GUIBody {
         lay_pan_mid.setConstraints(pan_mid_mid, new GBC().setGridx(1).setWeighty(1).setWeightx(0.5).setFill(GBC.BOTH));
         lay_pan_mid.setConstraints(pan_rht_mid, new GBC().setGridx(2).setWeighty(1).setWeightx(1.5).setFill(GBC.BOTH));
 
+        lay_pan_bot.setConstraints(lbl_timer_lft_mid, new GBC().setGridheight(2).setInsets(new Insets(0, 0, 0, 20)));
         for (int i = 0; i < buttons.length; i += 2) {
-            lay_pan_bot.setConstraints(buttons[i], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2).setGridy(0));
-            lay_pan_bot.setConstraints(buttons[i + 1], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2).setGridy(1));
+            lay_pan_bot.setConstraints(buttons[i], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2 + 1).setGridy(0));
+            lay_pan_bot.setConstraints(buttons[i + 1], new GBC().setInsets(new Insets(3, 3, 3, 3)).setIpadx(20).setIpady(20).setGridx(i / 2 + 1).setGridy(1));
         }
-
-//        JScrollPane pan_scp_rht_mid;
-//        JTextArea txt_scp_rht_mid;
-//
-//        JTextField fie_scp_rht_mid;
-//        JButton but_scp_rht_mid;
 
         lay_pan_rht_mid.setConstraints(pan_scp_rht_mid, new GBC().setGridwidth(2).setWeighty(1).setWeightx(1).setFill(GBC.BOTH));
 
@@ -178,6 +192,7 @@ public class GUIBody {
 
         frame.add(pan_mid);
 
+        pan_bot.add(lbl_timer_lft_mid);
         for (int i = 0; i < buttons.length; i++)
             pan_bot.add(buttons[i]);
 
@@ -187,9 +202,9 @@ public class GUIBody {
     private Icon getIcon() {
 
         if (icon == null) {
-            icon = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-            for (int i = 0; i < 100; i++) {
-                for (int j = 0; j < 100; j++) {
+            icon = new BufferedImage(150, 60, BufferedImage.TYPE_INT_ARGB);
+            for (int i = 0; i < 150; i++) {
+                for (int j = 0; j < 60; j++) {
                     int c = (int) (Math.random() * 255);
                     icon.setRGB(i, j, new Color(c, c, c).getRGB());
                 }
