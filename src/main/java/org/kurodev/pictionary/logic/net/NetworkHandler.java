@@ -1,7 +1,7 @@
 package org.kurodev.pictionary.logic.net;
 
+import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.interfaces.NetworkCallback;
 
 import java.io.IOException;
 import java.net.Socket;
