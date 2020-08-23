@@ -8,6 +8,7 @@ import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.stream.StreamWriter;
+import org.kurodev.pictionary.logic.util.Participant;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,7 +38,11 @@ public class StreamReaderWriterTest {
         Pixel pix = new Pixel(5, 6, 7);
         testStreamRead(pix);
     }
-
+    @Test
+    public void canReadAndWriteParticipantFromStreams() throws IOException {
+        Encodable en = new Participant("name",50);
+        testStreamRead(en);
+    }
     @Test
     @Parameters({"1,2", "3,5", "5,8", "2,15", "10,6", "15,12", "15,15", "10,10", "100,2", "1,1000", "245,1633"})
     public void testImageStreamReadWrite(int width, int height) throws IOException {
