@@ -1,8 +1,8 @@
 package org.kurodev.pictionary.logic.img;
 
-import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.util.ByteUtils;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
 import java.util.Objects;
 
@@ -18,9 +18,9 @@ public class Pixel implements Encodable {
     /**
      * Applies the state from the given bytes and inherits them into this instance.
      *
-     * @param data representation resulting from {@link #encode()}
+     * @param data representation resulting from {@link Encodable#encode(EasyByteWriter)}
      */
-    public Pixel(EasyByteStream data) {
+    public Pixel(EasyByteReader data) {
         decode(data);
     }
 
@@ -62,18 +62,17 @@ public class Pixel implements Encodable {
     }
 
     @Override
-    public void decode(EasyByteStream data) {
+    public void decode(EasyByteReader data) {
         x = data.readInt();
         y = data.readInt();
         argb = data.readInt();
     }
 
     @Override
-    public byte[] encode() {
-        byte[] x = ByteUtils.intToByte(this.x);
-        byte[] y = ByteUtils.intToByte(this.y);
-        byte[] argb = ByteUtils.intToByte(this.argb);
-        return ByteUtils.combine(x, y, argb);
+    public void encode(EasyByteWriter out) {
+        out.write(x);
+        out.write(y);
+        out.write(argb);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class Pixel implements Encodable {
         return "Pixel{" +
                 "x=" + x +
                 ", y=" + y +
-                ", argb=" + argb +
+                ", argb=" + Integer.toHexString(argb) +
                 '}';
     }
 }

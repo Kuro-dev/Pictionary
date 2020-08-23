@@ -1,6 +1,7 @@
 import org.junit.Test;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -21,9 +22,10 @@ public class ImageTest {
     @Test
     public void pixelEncodingWorks() {
         Pixel pix = new Pixel(2, 5, 241515);
-        byte[] code = pix.encode();
+        EasyByteWriter writer = new EasyByteWriter();
+        pix.encode(writer);
         Pixel pix1 = new Pixel();
-        pix1.decode(code);
+        pix1.decode(writer.toByteArray());
         assertEquals(pix, pix1);
     }
 

@@ -1,7 +1,8 @@
-package org.kurodev.pictionary.logic.net.encoding;
+package org.kurodev.pictionary.logic.net.encoding.stream;
 
 import java.io.IOException;
 import java.io.PushbackInputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,21 +12,30 @@ import java.util.List;
  **/
 public class StringEncoder {
     //Changing this value will affect the tests.
-    private static final char[] DELIMITER = {0x2};
+    public static final byte[] DELIMITER = {0x2};
+    private static final char[] DELIMITER_CHARS = toChar(DELIMITER);
+    private static final Charset SET = StandardCharsets.UTF_8;
+
+    private static char[] toChar(byte[] delimiter) {
+        char[] chars = new char[delimiter.length];
+        for (int i = 0; i < delimiter.length; i++) {
+            chars[i] = (char) delimiter[i];
+        }
+        return chars;
+    }
 
     public static byte[] encode(String... strings) {
         StringBuilder out = new StringBuilder();
         for (String string : strings) {
-            out.append(DELIMITER).append(string);
+            out.append(DELIMITER_CHARS).append(string);
         }
-        out.append(DELIMITER);
-        return out.toString().getBytes(StandardCharsets.UTF_8);
+        out.append(DELIMITER_CHARS);
+        return out.toString().getBytes(SET);
     }
 
     public static byte[] encode(String string) {
-        StringBuilder b = new StringBuilder(30);
-        char[] del = DELIMITER;
-        return b.append(del).append(string).append(del).toString().getBytes(StandardCharsets.UTF_8);
+        StringBuilder b = new StringBuilder(string.length());
+        return b.append(string).append(DELIMITER_CHARS).toString().getBytes(SET);
     }
 
     public static String[] decode(byte[] bytes) {
@@ -41,7 +51,7 @@ public class StringEncoder {
         return list.toArray(new String[0]);
     }
 
-    private static byte peek(PushbackInputStream in) {
+    static byte peek(PushbackInputStream in) {
         return peek(in, 1)[0];
     }
 
@@ -49,8 +59,7 @@ public class StringEncoder {
         return decode(bytes)[0];
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private static byte[] peek(PushbackInputStream in, int length) {
+    static byte[] peek(PushbackInputStream in, int length) {
         byte[] b = new byte[length];
         if (length > 0) {
             try {

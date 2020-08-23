@@ -3,6 +3,7 @@ package org.kurodev.pictionary.logic.net.encoding;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.stream.Message;
 
 import java.lang.reflect.Constructor;
@@ -46,11 +47,11 @@ public enum Code {
     }
 
     public Encodable construct(byte[] encoded) {
-        EasyByteStream stream = new EasyByteStream(encoded);
+        EasyByteReader stream = new EasyByteReader(encoded);
         try {
             for (Constructor<?> constructor : clazz.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
-                if (types.length == 1 && types[0] == EasyByteStream.class) {
+                if (types.length == 1 && types[0] == EasyByteReader.class) {
                     return (Encodable) constructor.newInstance(stream);
                 }
             }

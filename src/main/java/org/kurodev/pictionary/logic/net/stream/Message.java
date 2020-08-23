@@ -1,9 +1,8 @@
 package org.kurodev.pictionary.logic.net.stream;
 
-import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.encoding.StringEncoder;
-import org.kurodev.pictionary.logic.util.ByteUtils;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ public class Message implements Encodable {
     private String msg;
     private long time;
 
-    public Message(EasyByteStream bytes) {
+    public Message(EasyByteReader bytes) {
         decode(bytes);
     }
 
@@ -46,15 +45,14 @@ public class Message implements Encodable {
     }
 
     @Override
-    public void decode(EasyByteStream data) {
+    public void decode(EasyByteReader data) {
         time = data.readLong();
-        msg = StringEncoder.decodeNextString(data.readRemaining());
+        msg = data.readString();
     }
 
     @Override
-    public byte[] encode() {
-        byte[] time = ByteUtils.longToByte(this.time);
-        byte[] msg = StringEncoder.encode(this.msg);
-        return ByteUtils.combine(time, msg);
+    public void encode(EasyByteWriter out) {
+        out.write(time);
+        out.write(msg);
     }
 }

@@ -1,10 +1,9 @@
 package org.kurodev.pictionary.logic;
 
-import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.encoding.StringEncoder;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.logic.timer.Countdown;
-import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.util.Objects;
 
@@ -57,16 +56,15 @@ public class Pictionary implements Encodable {
     }
 
     @Override
-    public void decode(EasyByteStream data) {
+    public void decode(EasyByteReader data) {
+        word = data.readString();
         timerTime = data.readInt();
-        word = StringEncoder.decodeNextString(data.readRemaining());
     }
 
     @Override
-    public byte[] encode() {
-        byte[] word = StringEncoder.encode(this.word);
-        byte[] timer = ByteUtils.intToByte(timerTime);
-        return ByteUtils.combine(timer, word);
+    public void encode(EasyByteWriter out) {
+        out.write(word);
+        out.write(timerTime);
     }
 
     public boolean isWon() {

@@ -1,20 +1,23 @@
-package org.kurodev.pictionary.logic.net.encoding;
+package org.kurodev.pictionary.logic.net.encoding.stream;
 
+import org.kurodev.pictionary.logic.net.encoding.EncodingException;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PushbackInputStream;
+import java.util.Arrays;
 
 /**
  * @author kuro
  **/
 @SuppressWarnings("ALL")
-public class EasyByteStream extends ByteArrayInputStream {
-    public EasyByteStream(byte[] buf) {
+public class EasyByteReader extends ByteArrayInputStream {
+    public EasyByteReader(byte[] buf) {
         super(buf);
     }
 
-    public EasyByteStream(byte[] buf, int offset, int length) {
+    public EasyByteReader(byte[] buf, int offset, int length) {
         super(buf, offset, length);
     }
 
@@ -59,5 +62,20 @@ public class EasyByteStream extends ByteArrayInputStream {
             throw new RuntimeException(e);
         }
         return b;
+    }
+
+    public String readString() {
+        String out = "";
+        int length = StringEncoder.DELIMITER.length;
+        PushbackInputStream s = new PushbackInputStream(this, length);
+        try {
+            while (!Arrays.equals(StringEncoder.peek(s, length), StringEncoder.DELIMITER) && s.available() != -1) {
+                out += (char) s.read();
+            }
+        } catch (IOException e) {
+            throw new EncodingException(e);
+            //never thrown
+        }
+        return out;
     }
 }

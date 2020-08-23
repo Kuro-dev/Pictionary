@@ -1,7 +1,8 @@
 package org.kurodev.pictionary.logic.img;
 
-import org.kurodev.pictionary.logic.net.encoding.EasyByteStream;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class Image implements Encodable {
     /**
      * Applies the state from the given bytes and inherits them into this instance.
      *
-     * @param bytes representation resulting from {@link #encode()}
+     * @param bytes representation resulting from {@link Encodable#encode(EasyByteWriter)}
      */
-    public Image(EasyByteStream bytes) {
+    public Image(EasyByteReader bytes) {
         decode(bytes);
     }
 
@@ -80,7 +81,7 @@ public class Image implements Encodable {
     }
 
     @Override
-    public void decode(EasyByteStream data) {
+    public void decode(EasyByteReader data) {
         width = data.readInt();
         height = data.readInt();
         byte[] remaining = data.readRemaining();
@@ -88,11 +89,10 @@ public class Image implements Encodable {
     }
 
     @Override
-    public byte[] encode() {
-        byte[] width = ByteUtils.intToByte(this.width);
-        byte[] height = ByteUtils.intToByte(this.height);
-        byte[] pix = ByteUtils.intToByte(this.getImage());
-        return ByteUtils.combine(width, height, pix);
+    public void encode(EasyByteWriter out) {
+        out.write(width);
+        out.write(height);
+        out.write(this.getImage());
     }
 
     @Override
