@@ -38,11 +38,11 @@ public class GUIManager {
         instance.lay_pan_lft_mid.setConstraints(lab, new GBC().setGridy(index).setGridx(0).setAnchor(GBC.WEST).setInsets(new Insets(5, 20, 5, 5)));
         instance.pan_lft_mid.add(lab);
 
-        lab = new JLabel(participant.name);
+        lab = new JLabel(participant.getName());
         instance.lay_pan_lft_mid.setConstraints(lab, new GBC().setGridy(index).setGridx(1).setAnchor(GBC.WEST).setWeightx(1).setInsets(new Insets(5, 0, 5, 5)));
         instance.pan_lft_mid.add(lab);
 
-        lab = new JLabel("" + participant.score);
+        lab = new JLabel("" + participant.getScore());
         instance.lay_pan_lft_mid.setConstraints(lab, new GBC().setGridy(index).setGridx(2).setAnchor(GBC.EAST).setInsets(new Insets(5, 5, 5, 20)));
         instance.pan_lft_mid.add(lab);
 
@@ -54,8 +54,8 @@ public class GUIManager {
 
     public static void updateScore(String name, int score) {
         for (int i = 0; i < participant_list.size(); i++)
-            if (participant_list.get(i).name.equals(name))
-                participant_list.get(i).score = score;
+            if (participant_list.get(i).getName().equals(name))
+                participant_list.get(i).setScore(score);
 
         instance.pan_lft_mid.removeAll();
 
@@ -69,8 +69,8 @@ public class GUIManager {
 
     public static void sendChat(String name, String message) {
 
-        participant_list.stream().filter(participant -> participant.name.equals(name)).findFirst().ifPresent(participant -> {
-            chat_text += "<BR /><FONT color=\"" + participant.colour + "\">" + name + ": " + message + "</FONT>";
+        participant_list.stream().filter(participant -> participant.getName().equals(name)).findFirst().ifPresent(participant -> {
+            chat_text += "<BR /><FONT color=\"" + participant.getColour() + "\">" + name + ": " + message + "</FONT>";
             instance.txt_scp_rht_mid.setText("<HTML><BODY>" + chat_text + "</HTML></BODY>");
         });
 
