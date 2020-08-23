@@ -16,10 +16,9 @@ public class NetworkHandler {
     public static final int DEFAULT_PORT = 9876;
     private final ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
     private final Socket socket;
-    private final NetworkCallback callback;
     private final StreamReader in;
     private final StreamWriter out;
-
+    private NetworkCallback callback;
     private NetworkHandler(Socket socket, NetworkCallback callback, StreamWriter out, StreamReader in) {
         this.socket = socket;
         this.callback = callback;
@@ -42,6 +41,11 @@ public class NetworkHandler {
         NetworkHandler han = new NetworkHandler(soc, callback, writer, reader);
         han.initialize();
         return han;
+    }
+
+    public void setCallback(NetworkCallback callback) {
+        this.callback = callback;
+        in.setCallback(callback);
     }
 
     private void initialize() {
