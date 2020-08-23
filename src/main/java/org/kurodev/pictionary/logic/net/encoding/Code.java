@@ -5,6 +5,7 @@ import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.stream.Message;
+import org.kurodev.pictionary.logic.util.Participant;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,8 @@ public enum Code {
     PIXEL(Pixel.class),
     IMAGE(Image.class),
     GAME(Pictionary.class),
-    MESSAGE(Message.class);
+    MESSAGE(Message.class),
+    PARTICIPANT(Participant.class);
 
     private final Class<? extends Encodable> clazz;
 
