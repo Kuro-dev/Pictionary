@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.overlay;
 
 import org.kurodev.pictionary.overlay.factory.GBC;
+import org.kurodev.pictionary.overlay.factory.ResourceManager;
 
 import javax.accessibility.AccessibleExtendedText;
 import javax.swing.*;
@@ -51,7 +52,6 @@ public class GUIBody {
         makefinal();
 
         frame.pack();
-        frame.setVisible(true);
     }
 
     private void initialize() {
@@ -66,7 +66,7 @@ public class GUIBody {
         lay_pan_top = new GridBagLayout();
         pan_top.setLayout(lay_pan_top);
 
-        lbl_icon_top = new JLabel(getIcon());
+        lbl_icon_top = new JLabel(ResourceManager.getIcon());
         lbl_hint_top = new JLabel("WATERMELON");
         lbl_hint_top.setFont(new Font("Calibri", Font.BOLD, 30));
 
@@ -197,22 +197,6 @@ public class GUIBody {
             pan_bot.add(buttons[i]);
 
         frame.add(pan_bot);
-    }
-
-    private Icon getIcon() {
-
-        if (icon == null) {
-            icon = new BufferedImage(150, 60, BufferedImage.TYPE_INT_ARGB);
-            for (int i = 0; i < 150; i++) {
-                for (int j = 0; j < 60; j++) {
-                    int c = (int) (Math.random() * 255);
-                    icon.setRGB(i, j, new Color(c, c, c).getRGB());
-                }
-            }
-        }
-
-        return new ImageIcon(icon);
-
     }
 
     public void close() {

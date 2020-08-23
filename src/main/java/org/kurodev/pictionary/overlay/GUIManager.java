@@ -10,17 +10,21 @@ import java.util.ArrayList;
 public class GUIManager {
 
     private static GUIBody instance;
+    static Participant myself;
 
     static ArrayList<Participant> participant_list;
 
     public static void instantiate(String name) {
 
+        // Setting up game
         if (instance != null) instance.close();
         instance = new GUIBody(name);
-
         participant_list = new ArrayList<>();
 
-        addParticipant(name);
+        // Getting information
+
+
+//        addParticipant(myself = new Participant(name, 0));
 
     }
 
@@ -77,7 +81,6 @@ public class GUIManager {
     }
 
     public static void setTime(int min, int sec) {
-
         instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
     }
 
