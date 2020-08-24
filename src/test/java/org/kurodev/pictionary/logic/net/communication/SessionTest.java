@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
 public class SessionTest {
 
     @Test
-    public void hostJoinTest() throws IOException, InterruptedException {
+    public void hostJoinTest() throws IOException {
         int playerCount = 3;
         final int port = 9000;
         //Setup callback class
