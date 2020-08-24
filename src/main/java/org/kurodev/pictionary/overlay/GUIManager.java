@@ -1,6 +1,6 @@
 package org.kurodev.pictionary.overlay;
 
-import org.kurodev.pictionary.logic.util.Participant;
+import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.overlay.factory.GBC;
 
 import javax.swing.*;
@@ -39,7 +39,7 @@ public class GUIManager {
         instance.lay_pan_lft_mid.setConstraints(lab, new GBC().setGridy(participant_list.size() - 1).setGridx(0).setAnchor(GBC.WEST).setInsets(new Insets(5, 20, 5, 5)));
         instance.pan_lft_mid.add(lab);
 
-        lab = new JLabel(participant.name);
+        lab = new JLabel(participant.getName());
         instance.lay_pan_lft_mid.setConstraints(lab, new GBC().setGridy(participant_list.size() - 1).setGridx(1).setAnchor(GBC.WEST).setWeightx(1).setInsets(new Insets(5, 0, 5, 5)));
         instance.pan_lft_mid.add(lab);
 

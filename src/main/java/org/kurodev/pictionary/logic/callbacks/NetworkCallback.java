@@ -6,7 +6,6 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
  * @author kuro
  **/
 public interface NetworkCallback {
-    void onConnectionEstablished();
 
     void onObjectReceived(Encodable obj);
 

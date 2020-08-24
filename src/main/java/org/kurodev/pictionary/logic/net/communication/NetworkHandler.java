@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class NetworkHandler {
     private final ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
     private final Socket socket;
-    private final NetworkCallback callback;
+    private NetworkCallback callback;
     private final StreamReader in;
     private final StreamWriter out;
 
@@ -51,5 +51,10 @@ public class NetworkHandler {
         } catch (IOException e) {
             callback.onConnectionLost(e);
         }
+    }
+
+    public void setCallback(NetworkCallback callback) {
+    this.callback = callback;
+    in.setCallback(callback);
     }
 }

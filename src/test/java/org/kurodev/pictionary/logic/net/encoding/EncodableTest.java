@@ -9,6 +9,7 @@ import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.logic.net.stream.Message;
+import org.kurodev.pictionary.logic.net.communication.Participant;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -52,6 +53,14 @@ public class EncodableTest {
     public void messageTest(String msg) {
         Encodable expected = new Message(msg);
         Encodable actual = new Message("");
+        run(expected, actual);
+    }
+
+    @Test
+    @Parameters({"Kuro", "some Name", "test"})
+    public void participantTest(String name) {
+        Encodable expected = new Participant(name, 5);
+        Encodable actual = new Participant("");
         run(expected, actual);
     }
 }
