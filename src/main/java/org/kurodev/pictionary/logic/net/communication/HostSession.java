@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.logic.net.communication;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author kuro
  **/
-public class HostSession implements Runnable {
+public class HostSession implements Runnable, NetHandler {
     private final String username;
     private final ServerSocket socket;
     private final List<NetClient> clients = new ArrayList<>();
@@ -96,5 +97,10 @@ public class HostSession implements Runnable {
             //just don't call interrupts.
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void send(Encodable obj) {
+        clients.forEach(netClient -> netClient.getHandler().send(obj));
     }
 }

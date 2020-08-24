@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author kuro
  **/
-public class NetworkHandler {
+public class NetworkHandler implements NetHandler {
     private final ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
     private final Socket socket;
-    private NetworkCallback callback;
     private final StreamReader in;
     private final StreamWriter out;
+    private NetworkCallback callback;
 
     private NetworkHandler(Socket socket, NetworkCallback callback, StreamWriter out, StreamReader in) {
         this.socket = socket;
@@ -45,6 +45,7 @@ public class NetworkHandler {
         ex.scheduleAtFixedRate(in, 0, 100, TimeUnit.MILLISECONDS);
     }
 
+    @Override
     public void send(Encodable obj) {
         try {
             out.write(obj);
@@ -54,7 +55,7 @@ public class NetworkHandler {
     }
 
     public void setCallback(NetworkCallback callback) {
-    this.callback = callback;
-    in.setCallback(callback);
+        this.callback = callback;
+        in.setCallback(callback);
     }
 }
