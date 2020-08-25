@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Pixel implements Encodable {
     private int x;
     private int y;
+    private int radius;
     private int argb;
 
     /**
@@ -25,13 +26,18 @@ public class Pixel implements Encodable {
     }
 
     public Pixel() {
-        this(0, 0, 0);
+        this(0, 0, 1, 0);
+    }
+
+    public Pixel(int x, int y, int radius, int argb) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.argb = argb;
     }
 
     public Pixel(int x, int y, int argb) {
-        this.x = x;
-        this.y = y;
-        this.argb = argb;
+        this(x, y, 1, argb);
     }
 
     @Override
@@ -66,6 +72,7 @@ public class Pixel implements Encodable {
         x = data.readInt();
         y = data.readInt();
         argb = data.readInt();
+        radius = data.readInt();
     }
 
     @Override
@@ -73,6 +80,7 @@ public class Pixel implements Encodable {
         out.write(x);
         out.write(y);
         out.write(argb);
+        out.write(radius);
     }
 
     @Override
