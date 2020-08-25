@@ -3,13 +3,9 @@ package org.kurodev.pictionary.overlay;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.factory.ResourceManager;
 
-import javax.accessibility.AccessibleExtendedText;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.awt.color.ColorSpace;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;

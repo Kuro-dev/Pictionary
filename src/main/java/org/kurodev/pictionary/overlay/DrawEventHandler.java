@@ -1,5 +1,7 @@
 package org.kurodev.pictionary.overlay;
 
+import org.kurodev.pictionary.overlay.GUIBody;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -32,9 +34,13 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX(); // (int) (((double) e.getX() / (double) root.drawing_pane.getWidth()) * image.getWidth());
-        int y = e.getY(); // (int) (((double) e.getY() / (double) root.drawing_pane.getHeight()) * image.getHeight());
-        g.fillOval(x - 13 - brush_size / 2, y - 5 - brush_size / 2, brush_size / 2, brush_size / 2);
+        int x = e.getX();
+        int y = e.getY();
+        drawPoint(e.getX(), e.getY(), brush_size);
+    }
+
+    public void drawPoint(int x, int y, int size) {
+        g.fillOval(x - 13 - size / 2, y - 5 - size / 2, size / 2, size / 2);
         root.drawing_pane.setIcon(new ImageIcon(image));
     }
 

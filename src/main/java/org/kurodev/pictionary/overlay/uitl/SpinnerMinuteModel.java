@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.overlay;
+package org.kurodev.pictionary.overlay.uitl;
 
 import javax.swing.*;
 import java.io.Serializable;
@@ -32,6 +32,10 @@ public class SpinnerMinuteModel extends AbstractSpinnerModel implements Serializ
     public Object getPreviousValue() {
         counter--;
         return getValue();
+    }
+
+    public int getTimeAsInt() {
+        return counter;
     }
 
 //    public void addChangeListener(ChangeListener l) {

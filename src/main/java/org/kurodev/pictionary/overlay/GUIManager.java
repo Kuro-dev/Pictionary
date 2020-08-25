@@ -1,7 +1,12 @@
 package org.kurodev.pictionary.overlay;
 
+import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
+import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.factory.GBC;
+import org.kurodev.pictionary.overlay.uitl.PackageHost;
+import org.kurodev.pictionary.overlay.uitl.SpinnerMinuteModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,20 +14,52 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
+    static GUIGetInfo info;
     private static GUIBody instance;
     static Participant myself;
-
     static ArrayList<Participant> participant_list;
 
-    public static void instantiate(String name) {
+    public static void instantiate(Runnable if_hosted, Runnable if_joined) {
 
-        if (instance != null) instance.close();
-        instance = new GUIBody(name);
-        participant_list = new ArrayList<>();
+//        if (instance != null) instance.close();
+//        instance = new GUIBody(name);
+//        participant_list = new ArrayList<>();
+//
+//        myself = new Participant(name, 0);
+//        addParticipant(myself.getName());
+//        instance.frame.setVisible(true);
 
-        myself = new Participant(name, 0);
-        addParticipant(myself.getName());
-        instance.frame.setVisible(true);
+        info = new GUIGetInfo();
+
+        info.but_start_host.addActionListener(e -> if_hosted.run());
+        info.but_start_join.addActionListener(e -> if_joined.run());
+    }
+
+    public static PackageHost getHostPackage() {
+        myself = new Participant(info.fie_name.getText(), Integer.toHexString(info.but_choose_colour.getBackground().hashCode()).substring(0, 6), 0);
+        return new PackageHost(((SpinnerMinuteModel) info.spin_time.getModel()).getTimeAsInt(), info.fie_customwords.getText().split(" "), Integer.parseInt(info.fie_port_h.getText()));
+    }
+
+    public static NetworkCallback getMyCallback() {
+
+        return new NetworkCallback() {
+            @Override
+            public void onObjectReceived(Encodable obj) {
+
+                if (obj instanceof Pixel) {
+                    Pixel pixel = (Pixel) obj;
+                    instance.draw_event_handle.setColor(new Color(pixel.getArgb()));
+                    instance.draw_event_handle.drawPoint(pixel.getX(), pixel.getY(), 10);
+
+                }
+
+            }
+
+            @Override
+            public void onConnectionLost(Exception e) {
+
+            }
+        };
 
     }
 
@@ -81,5 +118,6 @@ public class GUIManager {
     public static void setTime(int min, int sec) {
         instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
     }
+
 
 }

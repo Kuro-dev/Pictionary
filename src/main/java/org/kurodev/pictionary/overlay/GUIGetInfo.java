@@ -4,6 +4,7 @@ import org.kurodev.pictionary.logic.net.NetworkHandler;
 import org.kurodev.pictionary.logic.util.RandomColor;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.factory.ResourceManager;
+import org.kurodev.pictionary.overlay.uitl.SpinnerMinuteModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,8 @@ public class GUIGetInfo {
     JLabel lab_ip;
     JTextField fie_ip;
 
-    JLabel lab_port;
-    JTextField fie_port;
+    JLabel lab_port_j;
+    JTextField fie_port_j;
 
     JButton but_start_join;
 
@@ -51,8 +52,8 @@ public class GUIGetInfo {
     JLabel lab_customwords;
     JTextArea fie_customwords;
 
-    // JLabel lab_port;
-    // JTextField fie_port;
+    JLabel lab_port_h;
+    JTextField fie_port_h;
 
     JButton but_start_host;
 
@@ -150,25 +151,21 @@ public class GUIGetInfo {
             lab_ip = new JLabel("Please enter an IP:");
             fie_ip = new JTextField();
 
-            lab_port = new JLabel("Please enter a Port:");
-            fie_port = new JTextField("" + NetworkHandler.DEFAULT_PORT);
+            lab_port_j = new JLabel("Please enter a Port:");
+            fie_port_j = new JTextField("" + NetworkHandler.DEFAULT_PORT);
 
             fie_ip.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER)
                         if (fie_ip.getText().matches("[\\w.]+[:][\\w]+")) {
-                            fie_port.setText(fie_ip.getText().substring(fie_ip.getText().indexOf(":") + 1));
+                            fie_port_h.setText(fie_ip.getText().substring(fie_ip.getText().indexOf(":") + 1));
                             fie_ip.setText(fie_ip.getText().substring(0, fie_ip.getText().indexOf(":")));
                         }
                 }
             });
 
             but_start_join = new JButton("START");
-
-            but_start_join.addActionListener(e -> {
-
-            });
 
         }
 
@@ -192,8 +189,8 @@ public class GUIGetInfo {
                 }
             });
 
-            // lab_port = new JLabel("Please enter a Port:");
-            // fie_port = new JTextField();
+            lab_port_h = new JLabel("Please enter a Port:");
+            fie_port_h = new JTextField("" + NetworkHandler.DEFAULT_PORT);
 
             but_start_host = new JButton("START");
 
@@ -215,16 +212,16 @@ public class GUIGetInfo {
 
         lay_ijoin.setConstraints(lab_ip, new GBC().setGridy(0).setFill(GBC.HORIZONTAL).setInsets(new Insets(10, 20, 5, 20)));
         lay_ijoin.setConstraints(fie_ip, new GBC().setGridy(1).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
-        lay_ijoin.setConstraints(lab_port, new GBC().setGridy(2).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
-        lay_ijoin.setConstraints(fie_port, new GBC().setGridy(3).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
+        lay_ijoin.setConstraints(lab_port_j, new GBC().setGridy(2).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
+        lay_ijoin.setConstraints(fie_port_j, new GBC().setGridy(3).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
         lay_ijoin.setConstraints(but_start_join, new GBC().setGridy(4).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
 
         lay_ihost.setConstraints(lab_time, new GBC().setGridy(0).setFill(GBC.HORIZONTAL).setInsets(new Insets(10, 20, 5, 20)));
         lay_ihost.setConstraints(spin_time, new GBC().setGridy(1).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
         lay_ihost.setConstraints(lab_customwords, new GBC().setGridy(2).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
         lay_ihost.setConstraints(fie_customwords, new GBC().setGridy(3).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
-        lay_ihost.setConstraints(lab_port, new GBC().setGridy(4).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
-        lay_ihost.setConstraints(fie_port, new GBC().setGridy(5).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
+        lay_ihost.setConstraints(lab_port_h, new GBC().setGridy(4).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
+        lay_ihost.setConstraints(fie_port_h, new GBC().setGridy(5).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 15, 20)));
         lay_ihost.setConstraints(but_start_host, new GBC().setGridy(6).setFill(GBC.HORIZONTAL).setInsets(new Insets(0, 20, 5, 20)));
 
     }
@@ -244,16 +241,16 @@ public class GUIGetInfo {
 
         pan_ijoin.add(lab_ip);
         pan_ijoin.add(fie_ip);
-        pan_ijoin.add(lab_port);
-        pan_ijoin.add(fie_port);
+        pan_ijoin.add(lab_port_j);
+        pan_ijoin.add(fie_port_j);
         pan_ijoin.add(but_start_join);
 
         pan_ihost.add(lab_time);
         pan_ihost.add(spin_time);
         pan_ihost.add(lab_customwords);
         pan_ihost.add(fie_customwords);
-        pan_ihost.add(lab_port);
-        pan_ihost.add(fie_port);
+        pan_ihost.add(lab_port_h);
+        pan_ihost.add(fie_port_h);
         pan_ihost.add(but_start_host);
 
         frame.pack();

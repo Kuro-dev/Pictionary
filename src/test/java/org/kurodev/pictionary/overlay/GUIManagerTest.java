@@ -4,12 +4,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@Deprecated
 public class GUIManagerTest {
 
     @Test
     public void wellItsATest() {
 
-        GUIManager.instantiate("MCXIV");
+//        GUIManager.instantiate("MCXIV");
         GUIManager.addParticipant("Hey");
         GUIManager.addParticipant("May");
         GUIManager.addParticipant("ugtfdsadi");

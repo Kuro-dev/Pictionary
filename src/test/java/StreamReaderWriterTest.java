@@ -9,7 +9,6 @@ import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.stream.StreamWriter;
-import org.kurodev.pictionary.logic.util.Participant;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,11 +41,6 @@ public class StreamReaderWriterTest {
     @Test
     public void canReadAndWriteParticipantFromStreams() throws IOException {
         Encodable en = new Participant("name",50);
-        testStreamRead(en);
-    }
-    @Test
-    public void canReadAndWriteParticipantFromStreams() throws IOException {
-        Encodable en = new Participant("name", 50);
         testStreamRead(en);
     }
 
