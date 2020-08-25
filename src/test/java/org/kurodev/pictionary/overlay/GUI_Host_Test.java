@@ -1,11 +1,14 @@
 package org.kurodev.pictionary.overlay;
 
-import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.communication.*;
-import org.kurodev.pictionary.overlay.uitl.PackageHost;
+import org.kurodev.pictionary.overlay.util.EncodableSender;
+import org.kurodev.pictionary.overlay.util.PackageClient;
+import org.kurodev.pictionary.overlay.util.PackageHost;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.fail;
 
 public class GUI_Host_Test {
 
@@ -14,20 +17,45 @@ public class GUI_Host_Test {
     }
 
     public void host_game() {
-        int players = 2;
+        int players = 1;
         PackageHost pack = GUIManager.getHostPackage();
 
         HostSession session = Session.host(GUIManager.myself.getName(), pack.getPort(), GUIManager.getMyCallback());
 
         session.open(players);
 
-        session.send(GUIManager.myself);
+        if (!session.awaitConnections(30, TimeUnit.SECONDS)) {
+            fail("Timeout");
+        }
 
-        GUIManager.setOnDrawEvent(session);
+        session.start();
+
+        EncodableSender sender = session::send;
+
+        sender.send(GUIManager.myself);
+
+        GUIManager.setOnDrawEvent(sender);
+
+        // TODO
+        /*
+        GUIManager.updateScore("May", 100);
+        GUIManager.sendChat("May","Hello");
+        GUIManager.setTime(4, 5);
+        */
 
     }
 
     public void join_game() {
+        int players = 1;
+        PackageClient pack = GUIManager.getClientPackage();
+
+        try {
+            NetworkHandler client = Session.join(GUIManager.myself, GUIManager.getMyCallback(), pack.getIp(), pack.getPort());
+            GUIManager.setOnDrawEvent(client::send);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

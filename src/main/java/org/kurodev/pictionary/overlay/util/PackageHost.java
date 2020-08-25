@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.overlay.uitl;
+package org.kurodev.pictionary.overlay.util;
 
 public class PackageHost {
 

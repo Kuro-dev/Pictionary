@@ -48,6 +48,7 @@ public class GUIBody {
         makefinal();
 
         frame.pack();
+        frame.setVisible(true);
     }
 
     private void initialize() {

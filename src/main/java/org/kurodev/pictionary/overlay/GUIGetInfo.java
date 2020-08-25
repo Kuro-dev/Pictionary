@@ -4,7 +4,7 @@ import org.kurodev.pictionary.logic.net.NetworkHandler;
 import org.kurodev.pictionary.logic.util.RandomColor;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.factory.ResourceManager;
-import org.kurodev.pictionary.overlay.uitl.SpinnerMinuteModel;
+import org.kurodev.pictionary.overlay.util.SpinnerMinuteModel;
 
 import javax.swing.*;
 import java.awt.*;
