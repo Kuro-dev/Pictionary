@@ -18,7 +18,7 @@ public class HostSession implements Runnable, NetHandler {
     private final String username;
     private final ServerSocket socket;
     private final List<NetClient> clients = new ArrayList<>();
-    private NetworkCallback callback;
+    private final NetworkCallback callback;
     private int playerCount = 0;
     private CountDownLatch latch = new CountDownLatch(1);
 
@@ -102,5 +102,13 @@ public class HostSession implements Runnable, NetHandler {
     @Override
     public void send(Encodable obj) {
         clients.forEach(netClient -> netClient.getHandler().send(obj));
+    }
+
+    public void send(Encodable obj, NetworkHandler client) {
+        client.send(obj);
+    }
+
+    public void send(Encodable obj, NetClient client) {
+        client.getHandler().send(obj);
     }
 }
