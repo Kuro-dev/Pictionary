@@ -65,6 +65,7 @@ public class GUIBody {
         pan_top.setBackground(Color.decode("#66DDAA"));
         lay_pan_top = new GridBagLayout();
         pan_top.setLayout(lay_pan_top);
+        pan_top.setBorder(BorderFactory.createMatteBorder(3, 3, 0, 3, Color.BLACK));
 
         lbl_icon_top = new JLabel(ResourceManager.getIcon());
         lbl_hint_top = new JLabel("WATERMELON");
@@ -80,6 +81,7 @@ public class GUIBody {
 
         pan_mid_mid = new JPanel(lay_pan_mid_mid = new GridBagLayout());
         pan_mid_mid.setBackground(Color.decode("#2169BA"));
+        pan_mid_mid.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));
 
         pan_rht_mid = new JPanel(lay_pan_rht_mid = new GridBagLayout());
         pan_rht_mid.setBackground(Color.decode("#7FFFD7"));

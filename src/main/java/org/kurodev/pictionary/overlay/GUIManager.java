@@ -16,15 +16,13 @@ public class GUIManager {
 
     public static void instantiate(String name) {
 
-        // Setting up game
         if (instance != null) instance.close();
         instance = new GUIBody(name);
         participant_list = new ArrayList<>();
 
-        // Getting information
-
-
-//        addParticipant(myself = new Participant(name, 0));
+        myself = new Participant(name, 0);
+        addParticipant(myself.getName());
+        instance.frame.setVisible(true);
 
     }
 
@@ -74,7 +72,7 @@ public class GUIManager {
     public static void sendChat(String name, String message) {
 
         participant_list.stream().filter(participant -> participant.getName().equals(name)).findFirst().ifPresent(participant -> {
-            chat_text += "<BR /><FONT color=\"" + participant.getColour() + "\">" + name + ": " + message + "</FONT>";
+            chat_text += "<BR /><FONT face='Calibri' color=\"" + participant.getColour() + "\"><B>" + name + ":</B> " + message + "</FONT>";
             instance.txt_scp_rht_mid.setText("<HTML><BODY>" + chat_text + "</HTML></BODY>");
         });
 

@@ -4,7 +4,7 @@ public class RandomColor {
 
     public static String getHex() {
 
-        return getRandomHEX(150, 200) + getRandomHEX(100, 200) + getRandomHEX(100, 200);
+        return getRandomHEX(200, 25) + getRandomHEX(100, 200) + getRandomHEX(100, 200);
 
     }
 

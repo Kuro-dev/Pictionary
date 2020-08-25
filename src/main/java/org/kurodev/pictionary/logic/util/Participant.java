@@ -21,7 +21,6 @@ public class Participant implements Encodable {
         this.name = name;
         this.score = score;
         this.colour = RandomColor.getHex();
-        System.out.println(colour);
     }
 
     @Override
