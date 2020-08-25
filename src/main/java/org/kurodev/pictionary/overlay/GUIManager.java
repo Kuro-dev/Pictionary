@@ -4,11 +4,9 @@ import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
+import org.kurodev.pictionary.logic.net.stream.Message;
 import org.kurodev.pictionary.overlay.factory.GBC;
-import org.kurodev.pictionary.overlay.util.EncodableSender;
-import org.kurodev.pictionary.overlay.util.PackageClient;
-import org.kurodev.pictionary.overlay.util.PackageHost;
-import org.kurodev.pictionary.overlay.util.SpinnerMinuteModel;
+import org.kurodev.pictionary.overlay.util.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +18,8 @@ public class GUIManager {
     private static GUIBody instance;
     static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
+
+    static EncodableSender message_sender = null;
 
     public static void instantiate(Runnable if_hosted, Runnable if_joined) {
 
@@ -48,17 +48,18 @@ public class GUIManager {
         return new NetworkCallback() {
             @Override
             public void onObjectReceived(Encodable obj) {
-                System.out.println("object received");
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;
-                    System.out.println("pixel received" + pixel.toString());
                     instance.draw_event_handle.setColor(new Color(pixel.getArgb()));
-                    System.out.println(new Color(pixel.getArgb()).getRed() + " " + new Color(pixel.getArgb()).getGreen() + " " + new Color(pixel.getArgb()).getBlue());
                     instance.draw_event_handle.drawPoint(pixel.getX(), pixel.getY(), pixel.getRadius());
 
                 } else if (obj instanceof Participant) {
                     Participant p = (Participant) obj;
                     addParticipant(p);
+
+                } else if (obj instanceof MessageEncodable) {
+                    MessageEncodable msg = (MessageEncodable) obj;
+                    sendChat(msg.getName(), msg.getMessage());
                 }
             }
 
@@ -72,6 +73,10 @@ public class GUIManager {
 
     public static void setOnDrawEvent(EncodableSender sender) {
         instance.draw_event_handle.setSessionToRespond(sender);
+    }
+
+    public static void setOnMessageEvent(EncodableSender sender) {
+        sender = message_sender;
     }
 
     static int index = 0;
@@ -113,9 +118,12 @@ public class GUIManager {
 
     public static void sendChat(String name, String message) {
 
+//        System.out.println(name + " " + message);
+
+        if (message_sender != null) message_sender.send(new MessageEncodable(name, message));
+
         participant_list.stream().filter(participant -> participant.getName().equals(name)).findFirst().ifPresent(participant -> {
-            System.out.println(Integer.toHexString(new Color(Integer.parseInt(participant.getColour())).hashCode()));
-            chat_text += "<BR /><FONT face='Calibri' color=\"#" + Integer.toHexString(new Color(Integer.parseInt(participant.getColour())).hashCode()) + "\"><B>" + name + ":</B> " + message + "</FONT>";
+            chat_text += "<BR /><FONT face='Calibri' color=\"#" + Integer.toHexString(new Color(Integer.parseInt(participant.getColour(), 16)).hashCode()) + "\"><B>" + name + ":</B> " + message + "</FONT>";
             instance.txt_scp_rht_mid.setText("<HTML><BODY>" + chat_text + "</HTML></BODY>");
         });
 

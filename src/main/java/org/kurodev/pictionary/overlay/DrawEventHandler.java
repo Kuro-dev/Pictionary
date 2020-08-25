@@ -37,7 +37,7 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
     @Override
     public void mouseDragged(MouseEvent e) {
         drawPoint(e.getX(), e.getY(), brush_size);
-        if (sender != null) sender.send(new Pixel(e.getX(), e.getY(), g.getColor().getRGB(), brush_size));
+        if (sender != null) sender.send(new Pixel(e.getX(), e.getY(), brush_size, g.getColor().getRGB()));
     }
 
     public void drawPoint(int x, int y, int size) {
