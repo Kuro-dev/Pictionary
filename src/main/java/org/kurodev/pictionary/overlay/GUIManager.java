@@ -1,6 +1,6 @@
 package org.kurodev.pictionary.overlay;
 
-import org.kurodev.pictionary.logic.util.Participant;
+import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.overlay.factory.GBC;
 
 import javax.swing.*;

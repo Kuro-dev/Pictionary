@@ -73,4 +73,20 @@ public class Participant implements Encodable {
         out.write(colour);
         out.write(score);
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public String getColour() {
+        return colour;
+    }
 }
