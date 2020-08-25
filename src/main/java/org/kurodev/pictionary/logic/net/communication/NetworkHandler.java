@@ -42,7 +42,7 @@ public class NetworkHandler implements NetHandler {
     }
 
     private void initialize() {
-        ex.scheduleAtFixedRate(in, 0, 100, TimeUnit.MILLISECONDS);
+        ex.scheduleAtFixedRate(in, 0, 10, TimeUnit.MILLISECONDS);
     }
 
     @Override
