@@ -167,7 +167,7 @@ public class GUIGetInfo {
             but_start_join = new JButton("START");
 
             but_start_join.addActionListener(e -> {
-                
+
             });
 
         }
