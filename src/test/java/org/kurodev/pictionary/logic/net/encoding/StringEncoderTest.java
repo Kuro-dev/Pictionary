@@ -38,7 +38,8 @@ public class StringEncoderTest {
     @Parameters({"srahsro,atiohsaot,atksatnst,astaotp",
             "as9rasg aas,asga",
             "apahrpasjrara",
-            "Hello World, Hello, World"})
+            "Hello World, Hello, World",
+            "ÄÖÜäääääää#üsat+r5a#ry+fl,469346gäÄÖÜsd#s,463Ö7#gÄd#grÜd"})
     public void testGarbageInputs(String... args) {
         byte[] encoded = StringEncoder.encode(args);
         String[] decoded = StringEncoder.decode(encoded);
