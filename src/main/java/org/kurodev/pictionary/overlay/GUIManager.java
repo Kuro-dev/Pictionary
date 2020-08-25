@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
-    private static GUIBody instance;
-
     static ArrayList<Participant> participant_list;
+    private static GUIBody instance;
 
     public static void instantiate(String name) {
 
@@ -53,5 +52,11 @@ public class GUIManager {
     }
 
 
+    public static void sendChat(String name, String text) {
+        //TODO reimplement that
+    }
 
+    public static void updateScore(String name, int i) {
+        //TODO reimplement that
+    }
 }

@@ -10,18 +10,28 @@ public class Participant implements Encodable {
 
     public int score;
     private String name;
+    private String colour;
 
     public Participant(EasyByteReader in) {
         decode(in);
     }
 
     public Participant(String name) {
-        this(name, 0);
+        this(name, "", 0);
     }
 
-    public Participant(String name, int score) {
+    public Participant(String name, String colour) {
+        this(name, colour, 0);
+    }
+
+    public Participant(String name, String colour, int score) {
         this.name = name;
+        this.colour = colour;
         this.score = score;
+    }
+
+    public Participant(String name, int i) {
+        this(name, "", i);
     }
 
     @Override
@@ -53,12 +63,14 @@ public class Participant implements Encodable {
     @Override
     public void decode(EasyByteReader data) {
         name = data.readString();
+        colour = data.readString();
         score = data.readInt();
     }
 
     @Override
     public void encode(EasyByteWriter out) {
         out.write(name);
+        out.write(colour);
         out.write(score);
     }
 }
