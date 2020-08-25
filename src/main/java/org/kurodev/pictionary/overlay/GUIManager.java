@@ -2,6 +2,7 @@ package org.kurodev.pictionary.overlay;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.communication.HostSession;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.factory.GBC;
@@ -45,22 +46,25 @@ public class GUIManager {
         return new NetworkCallback() {
             @Override
             public void onObjectReceived(Encodable obj) {
-
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;
                     instance.draw_event_handle.setColor(new Color(pixel.getArgb()));
-                    instance.draw_event_handle.drawPoint(pixel.getX(), pixel.getY(), 10);
+                    instance.draw_event_handle.drawPoint(pixel.getX(), pixel.getY(), pixel.getRadius());
 
+                } else if (obj instanceof Participant) {
+                    // TODO
                 }
-
             }
-
             @Override
             public void onConnectionLost(Exception e) {
-
+                e.printStackTrace();
             }
         };
 
+    }
+
+    public static void setOnDrawEvent(HostSession session) {
+        instance.draw_event_handle.setSessionToRespond(session);
     }
 
     static int index = 0;
@@ -118,6 +122,7 @@ public class GUIManager {
     public static void setTime(int min, int sec) {
         instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
     }
+
 
 
 }

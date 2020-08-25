@@ -91,4 +91,8 @@ public class Pixel implements Encodable {
                 ", argb=" + Integer.toHexString(argb) +
                 '}';
     }
+
+    public int getRadius() {
+        return radius;
+    }
 }

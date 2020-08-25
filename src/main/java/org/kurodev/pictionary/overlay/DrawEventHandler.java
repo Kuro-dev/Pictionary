@@ -1,5 +1,7 @@
 package org.kurodev.pictionary.overlay;
 
+import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.communication.HostSession;
 import org.kurodev.pictionary.overlay.GUIBody;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class DrawEventHandler implements MouseMotionListener, MouseWheelListener {
 
     GUIBody root;
+    HostSession session = null;
 
     Graphics g;
 
@@ -34,9 +37,8 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
         drawPoint(e.getX(), e.getY(), brush_size);
+        session.send(new Pixel(e.getX(), e.getY(), g.getColor().getRGB(), brush_size));
     }
 
     public void drawPoint(int x, int y, int size) {
@@ -44,9 +46,12 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
         root.drawing_pane.setIcon(new ImageIcon(image));
     }
 
-    @Override
-    public void mouseMoved(MouseEvent e) {
+    public void setColor(Color col) {
+        g.setColor(col);
+    }
 
+    public void setSessionToRespond(HostSession s) {
+        session = s;
     }
 
     @Override
@@ -55,7 +60,7 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
         brush_size = Math.max(10, Math.min(brush_size, 50));
     }
 
-    public void setColor(Color col) {
-        g.setColor(col);
+    @Override
+    public void mouseMoved(MouseEvent e) {
     }
 }

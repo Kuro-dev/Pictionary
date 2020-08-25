@@ -1,8 +1,11 @@
 package org.kurodev.pictionary.overlay;
 
-import org.kurodev.pictionary.logic.net.communication.HostSession;
-import org.kurodev.pictionary.logic.net.communication.Session;
+import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
+import org.kurodev.pictionary.logic.net.communication.*;
 import org.kurodev.pictionary.overlay.uitl.PackageHost;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUI_Host_Test {
 
@@ -15,6 +18,12 @@ public class GUI_Host_Test {
         PackageHost pack = GUIManager.getHostPackage();
 
         HostSession session = Session.host(GUIManager.myself.getName(), pack.getPort(), GUIManager.getMyCallback());
+
+        session.open(players);
+
+        session.send(GUIManager.myself);
+
+        GUIManager.setOnDrawEvent(session);
 
     }
 
