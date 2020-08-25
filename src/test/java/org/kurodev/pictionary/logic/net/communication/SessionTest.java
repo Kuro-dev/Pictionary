@@ -31,7 +31,7 @@ public class SessionTest {
         for (int i = 0; i < playerCount; i++) {
             VoidCallback callback = new VoidCallback("player " + i);
             clientCallbacks.add(callback);
-            clients.add(Session.join(new Participant("player" + i), callback, "localhost", port));
+            clients.add(Session.join(new Participant("player" + (i + 1)), callback, "localhost", port));
         }
         //wait for the connections
         if (!session.awaitConnections(3, TimeUnit.SECONDS)) {
