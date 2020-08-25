@@ -10,16 +10,17 @@ import java.util.List;
 /**
  * @author kuro
  **/
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class StringEncoder {
     //Changing this value will affect the tests.
     public static final byte[] DELIMITER = {0x2};
-    private static final char[] DELIMITER_CHARS = toChar(DELIMITER);
+    private static final char[] DELIMITER_CHARS = toChar();
     private static final Charset SET = StandardCharsets.UTF_8;
 
-    private static char[] toChar(byte[] delimiter) {
-        char[] chars = new char[delimiter.length];
-        for (int i = 0; i < delimiter.length; i++) {
-            chars[i] = (char) delimiter[i];
+    private static char[] toChar() {
+        char[] chars = new char[StringEncoder.DELIMITER.length];
+        for (int i = 0; i < StringEncoder.DELIMITER.length; i++) {
+            chars[i] = (char) StringEncoder.DELIMITER[i];
         }
         return chars;
     }
