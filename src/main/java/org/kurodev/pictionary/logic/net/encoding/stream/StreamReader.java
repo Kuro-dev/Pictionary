@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.logic.net.stream;
+package org.kurodev.pictionary.logic.net.encoding.stream;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.encoding.Code;
