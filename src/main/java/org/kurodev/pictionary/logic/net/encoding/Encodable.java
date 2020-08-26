@@ -5,7 +5,7 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
 /**
  * Important info.
- * <p><When implementing this Interface into any class, please do mind that the class needs to be added to {@link Code}./p>
+ * <p>When implementing this Interface into any class, please do mind that the class needs to be added to {@link Code}.</p>
  * <p>The implementing class must either have a Default (empty) constructor or a constructor that accepts {@link EasyByteReader}</p>
  * <p>the constructor can look like follows:</p>
  * <Code>constructor(EasyByteReader in){
