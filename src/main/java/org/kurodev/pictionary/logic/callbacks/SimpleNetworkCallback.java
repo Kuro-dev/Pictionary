@@ -6,6 +6,7 @@ import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.stream.Command;
+import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,6 +32,8 @@ public interface SimpleNetworkCallback extends NetworkCallback {
     void onObjectReceived(Participant obj);
 
     void onObjectReceived(Command obj);
+
+    void onObjectReceived(MessageEncodable obj);
 
     void onObjectReceived(Image obj);
 }
