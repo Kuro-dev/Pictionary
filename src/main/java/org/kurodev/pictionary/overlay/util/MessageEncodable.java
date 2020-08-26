@@ -16,6 +16,10 @@ public class MessageEncodable implements Encodable {
         message = _message;
     }
 
+    public MessageEncodable(EasyByteReader in) {
+        decode(in);
+    }
+
     @Override
     public void decode(EasyByteReader data) {
         name = data.readString();

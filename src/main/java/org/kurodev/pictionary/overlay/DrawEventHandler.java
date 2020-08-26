@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.overlay;
 
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.communication.NetHandler;
 import org.kurodev.pictionary.overlay.util.EncodableSender;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.awt.image.BufferedImage;
 public class DrawEventHandler implements MouseMotionListener, MouseWheelListener {
 
     GUIBody root;
-    EncodableSender sender = null;
+    NetHandler sender = null;
 
     Graphics g;
 
@@ -49,7 +50,7 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
         g.setColor(col);
     }
 
-    public void setSessionToRespond(EncodableSender s) {
+    public void setSessionToRespond(NetHandler s) {
         if (s == null) throw new NullPointerException("You cant just pass on a null session object.");
         sender = s;
     }

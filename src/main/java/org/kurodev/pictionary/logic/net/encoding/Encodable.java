@@ -9,7 +9,7 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
  * <p>The implementing class must either have a Default (empty) constructor or a constructor that accepts {@link EasyByteReader}</p>
  * <p>the constructor can look like follows:</p>
  * <Code>constructor(EasyByteReader in){
- * decode(in)
+ * decode(in);
  * }</Code>
  *
  * @author kuro

@@ -2,6 +2,7 @@ package org.kurodev.pictionary.overlay;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
+import org.kurodev.pictionary.logic.net.communication.NetHandler;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.factory.GBC;
@@ -19,7 +20,7 @@ public class GUIManager {
     static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
 
-    static EncodableSender message_sender = null;
+    static NetHandler message_sender = null;
 
     public static void instantiate(Runnable if_hosted, Runnable if_joined) {
 
@@ -53,8 +54,6 @@ public class GUIManager {
             @Override
             public void onObjectReceived(Encodable obj) {
 
-                System.out.println(obj);
-
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;
                     instance.draw_event_handle.setColor(new Color(pixel.getArgb()));
@@ -66,7 +65,6 @@ public class GUIManager {
 
                 } else if (obj instanceof MessageEncodable) {
                     MessageEncodable msg = (MessageEncodable) obj;
-                    System.out.println(msg.toString());
                     sendChat(msg.getName(), msg.getMessage());
                 }
             }
@@ -79,11 +77,11 @@ public class GUIManager {
 
     }
 
-    public static void setOnDrawEvent(EncodableSender sender) {
+    public static void setOnDrawEvent(NetHandler sender) {
         instance.draw_event_handle.setSessionToRespond(sender);
     }
 
-    public static void setOnMessageEvent(EncodableSender sender) {
+    public static void setOnMessageEvent(NetHandler sender) {
         message_sender = sender;
     }
 
