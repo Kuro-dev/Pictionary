@@ -8,8 +8,8 @@ import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.stream.StreamReader;
-import org.kurodev.pictionary.logic.net.stream.StreamWriter;
+import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import java.io.ByteArrayInputStream;

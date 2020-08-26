@@ -2,8 +2,8 @@ package org.kurodev.pictionary.logic.net.communication;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.stream.StreamReader;
-import org.kurodev.pictionary.logic.net.stream.StreamWriter;
+import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
+import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
 
 import java.io.IOException;
 import java.net.Socket;

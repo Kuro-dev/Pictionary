@@ -1,8 +1,7 @@
-package org.kurodev.pictionary.logic.net.stream;
+package org.kurodev.pictionary.logic.net.encoding.stream;
 
 import org.kurodev.pictionary.logic.net.encoding.Code;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.io.IOException;
