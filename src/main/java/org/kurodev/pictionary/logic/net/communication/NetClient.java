@@ -45,4 +45,8 @@ public class NetClient implements NetworkCallback {
                 "client=" + client +
                 '}';
     }
+
+    public Participant getClient() {
+        return client;
+    }
 }

@@ -8,8 +8,9 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.Command;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
-import org.kurodev.pictionary.logic.net.stream.Command;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -61,6 +62,14 @@ public class EncodableTest {
     public void participantTest(String name) {
         Encodable expected = new Participant(name, 5);
         Encodable actual = new Participant("");
+        run(expected, actual);
+    }
+
+    @Test
+    public void drawTokenTest() {
+        Participant p = new Participant("Kuro", 5);
+        Encodable expected = new DrawToken(p);
+        Encodable actual = new DrawToken(new Participant(""));
         run(expected, actual);
     }
 }

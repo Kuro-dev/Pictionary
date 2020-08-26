@@ -4,8 +4,9 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.Command;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
-import org.kurodev.pictionary.logic.net.stream.Command;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import java.lang.reflect.Constructor;
@@ -20,6 +21,7 @@ public enum Code {
     IMAGE(Image.class),
     GAME(Pictionary.class),
     COMMAND(Command.class),
+    DRAW_TOKEN(DrawToken.class),
     MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
     ;

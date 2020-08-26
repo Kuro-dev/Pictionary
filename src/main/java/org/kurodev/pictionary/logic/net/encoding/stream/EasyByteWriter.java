@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.logic.net.encoding.stream;
 
 import org.jetbrains.annotations.NotNull;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -39,5 +40,9 @@ public class EasyByteWriter extends ByteArrayOutputStream {
 
     public void write(String s) {
         write(StringEncoder.encode(s));
+    }
+
+    public void write(Encodable en) {
+        en.encode(this);
     }
 }
