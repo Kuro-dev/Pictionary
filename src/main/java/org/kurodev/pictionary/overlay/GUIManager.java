@@ -4,7 +4,6 @@ import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
-import org.kurodev.pictionary.logic.net.stream.Message;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.util.*;
 

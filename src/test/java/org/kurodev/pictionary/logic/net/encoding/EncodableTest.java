@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
-import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
-import org.kurodev.pictionary.logic.net.stream.Message;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
+import org.kurodev.pictionary.logic.net.stream.Command;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -50,9 +50,9 @@ public class EncodableTest {
 
     @Test
     @Parameters({"hello world", "test\n\n\n\n\n\ntest", "test\r\r\r\r\r\n\n", "__.d^1^# a^@@}\\=?"})
-    public void messageTest(String msg) {
-        Encodable expected = new Message(msg);
-        Encodable actual = new Message("");
+    public void commandTest(String msg) {
+        Encodable expected = new Command(msg);
+        Encodable actual = new Command("");
         run(expected, actual);
     }
 

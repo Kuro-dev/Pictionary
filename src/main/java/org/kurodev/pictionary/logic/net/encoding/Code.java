@@ -3,9 +3,10 @@ package org.kurodev.pictionary.logic.net.encoding;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
-import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
-import org.kurodev.pictionary.logic.net.stream.Message;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
+import org.kurodev.pictionary.logic.net.stream.Command;
+import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +19,8 @@ public enum Code {
     PIXEL(Pixel.class),
     IMAGE(Image.class),
     GAME(Pictionary.class),
-    MESSAGE(Message.class),
+    COMMAND(Command.class),
+    MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
     ;
 

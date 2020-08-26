@@ -1,10 +1,8 @@
 package org.kurodev.pictionary.overlay.util;
 
-import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
-import org.kurodev.pictionary.logic.net.stream.Message;
 
 import java.util.Objects;
 
