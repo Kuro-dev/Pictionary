@@ -17,7 +17,7 @@ public class ResourceManager {
 
             image = ImageIO.read(ResourceManager.class.getResource("/img/gameIcon.jpg"));
 
-            return new ImageIcon(image.getScaledInstance(WIDTH, image.getHeight()*WIDTH/image.getHeight(), Image.SCALE_SMOOTH));
+            return new ImageIcon(image.getScaledInstance(WIDTH, (image.getHeight() * WIDTH / image.getWidth()), Image.SCALE_SMOOTH));
 
         } catch (IOException e) {
 
