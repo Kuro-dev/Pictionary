@@ -4,6 +4,7 @@ import org.kurodev.pictionary.logic.net.encoding.EncodingException;
 import org.kurodev.pictionary.logic.util.ByteUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PushbackInputStream;
 import java.util.Arrays;
@@ -62,6 +63,22 @@ public class EasyByteReader extends ByteArrayInputStream {
             throw new RuntimeException(e);
         }
         return b;
+    }
+
+    public EasyByteReader readEncodable() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int length = EasyByteWriter.ENCODABLE_DELIMITER.length;
+        PushbackInputStream s = new PushbackInputStream(this, length);
+        try {
+            while (!Arrays.equals(StringEncoder.peek(s, length), EasyByteWriter.ENCODABLE_DELIMITER) && s.available() != -1) {
+                out.write(s.read());
+            }
+            s.skip(length);
+        } catch (IOException e) {
+            throw new EncodingException(e);
+            //never thrown
+        }
+        return new EasyByteReader(out.toByteArray());
     }
 
     public String readString() {

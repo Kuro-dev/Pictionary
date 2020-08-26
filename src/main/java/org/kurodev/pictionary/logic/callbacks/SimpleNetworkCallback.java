@@ -5,6 +5,7 @@ import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.Token;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
@@ -36,4 +37,6 @@ public interface SimpleNetworkCallback extends NetworkCallback {
     void onObjectReceived(MessageEncodable obj);
 
     void onObjectReceived(Image obj);
+
+    void onObjectReceived(Token token);
 }

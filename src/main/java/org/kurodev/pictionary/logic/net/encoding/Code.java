@@ -5,7 +5,9 @@ import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
-import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.CorrectGuessToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.TimeOutToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
@@ -21,10 +23,12 @@ public enum Code {
     IMAGE(Image.class),
     GAME(Pictionary.class),
     COMMAND(Command.class),
-    DRAW_TOKEN(DrawToken.class),
     MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
-    ;
+    //TOKENS,
+    DRAW_TOKEN(DrawToken.class),
+    TIMEOUT_TOKEN(TimeOutToken.class),
+    CORRECT_GUESS(CorrectGuessToken.class);
 
     private final Class<? extends Encodable> clazz;
 

@@ -11,6 +11,8 @@ import java.io.IOException;
  * @author kuro
  **/
 public class EasyByteWriter extends ByteArrayOutputStream {
+    static final byte[] ENCODABLE_DELIMITER = {0, 127, 0};
+
     public EasyByteWriter() {
     }
 
@@ -44,5 +46,6 @@ public class EasyByteWriter extends ByteArrayOutputStream {
 
     public void write(Encodable en) {
         en.encode(this);
+        this.write(ENCODABLE_DELIMITER);
     }
 }

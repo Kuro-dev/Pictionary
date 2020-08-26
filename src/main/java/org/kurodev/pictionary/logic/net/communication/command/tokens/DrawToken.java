@@ -1,7 +1,6 @@
-package org.kurodev.pictionary.logic.net.communication.command;
+package org.kurodev.pictionary.logic.net.communication.command.tokens;
 
 import org.kurodev.pictionary.logic.net.communication.Participant;
-import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
@@ -10,13 +9,13 @@ import java.util.Objects;
 /**
  * @author kuro
  **/
-public class DrawToken implements Encodable {
+public class DrawToken extends Token {
 
 
     private Participant participant;
 
     public DrawToken(EasyByteReader bytes) {
-        decode(bytes);
+        super(bytes);
     }
 
     public DrawToken(Participant participant) {
@@ -28,7 +27,7 @@ public class DrawToken implements Encodable {
 
     @Override
     public void decode(EasyByteReader data) {
-        participant = new Participant(data);
+        participant = new Participant(data.readEncodable());
     }
 
     @Override

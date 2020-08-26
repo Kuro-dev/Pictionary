@@ -6,7 +6,10 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
-import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.CorrectGuessToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.TimeOutToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.Token;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
@@ -78,6 +81,19 @@ public class StreamReaderWriterTest {
     @Test
     public void messageEncodableTest() throws IOException {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void tokenTest() throws IOException {
+        Token t = new TimeOutToken();
+        testStreamRead(t);
+    }
+
+    @Test
+    public void correctGuessTokenTest() throws IOException {
+        Participant p = new Participant("Kuro", 5);
+        Encodable expected = new CorrectGuessToken(p);
         testStreamRead(expected);
     }
 }

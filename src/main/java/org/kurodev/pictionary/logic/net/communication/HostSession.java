@@ -1,7 +1,7 @@
 package org.kurodev.pictionary.logic.net.communication;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
-import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 
 import java.io.IOException;
@@ -138,6 +138,17 @@ public class HostSession implements Runnable, NetHandler {
         DrawToken token = new DrawToken(next.getClient());
         send(token);
         return next;
+    }
+
+    /**
+     * Will send the given encodable to  each client except for the one that has been given in parameter.
+     * This should be used to synchronise pictures and image drawing.
+     *
+     * @param obj    object to send
+     * @param client client to exclude from the broadcast.
+     */
+    public void sendExclude(Encodable obj, NetClient client) {
+        clients.stream().filter(client1 -> !client1.equals(client)).forEach(client1 -> client1.getHandler().send(obj));
     }
 
     /**
