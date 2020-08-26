@@ -48,6 +48,8 @@ public class GUIManager {
         return new NetworkCallback() {
             @Override
             public void onObjectReceived(Encodable obj) {
+                System.out.println("Object received");
+
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;
                     instance.draw_event_handle.setColor(new Color(pixel.getArgb()));
@@ -59,6 +61,7 @@ public class GUIManager {
 
                 } else if (obj instanceof MessageEncodable) {
                     MessageEncodable msg = (MessageEncodable) obj;
+                    System.out.println(msg.toString());
                     sendChat(msg.getName(), msg.getMessage());
                 }
             }
@@ -76,7 +79,7 @@ public class GUIManager {
     }
 
     public static void setOnMessageEvent(EncodableSender sender) {
-        sender = message_sender;
+        message_sender = sender;
     }
 
     static int index = 0;
@@ -120,7 +123,11 @@ public class GUIManager {
 
 //        System.out.println(name + " " + message);
 
-        if (message_sender != null) message_sender.send(new MessageEncodable(name, message));
+
+        if (message_sender != null && name.equals(myself.getName())) {
+            message_sender.send(new MessageEncodable(name, message));
+            System.out.println("sent: " + name + " " + message);
+        }
 
         participant_list.stream().filter(participant -> participant.getName().equals(name)).findFirst().ifPresent(participant -> {
             chat_text += "<BR /><FONT face='Calibri' color=\"#" + Integer.toHexString(new Color(Integer.parseInt(participant.getColour(), 16)).hashCode()) + "\"><B>" + name + ":</B> " + message + "</FONT>";

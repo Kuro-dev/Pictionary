@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
-public class GUI_Host_Test {
+public class GUI_Test {
 
-    public GUI_Host_Test() {
+    public GUI_Test() {
         GUIManager.instantiate(this::host_game, this::join_game);
     }
 
@@ -35,6 +35,7 @@ public class GUI_Host_Test {
         sender.send(GUIManager.myself);
 
         GUIManager.setOnDrawEvent(sender);
+        GUIManager.setOnMessageEvent(sender);
 
         // TODO
         /*
@@ -52,6 +53,7 @@ public class GUI_Host_Test {
         try {
             NetworkHandler client = Session.join(GUIManager.myself, GUIManager.getMyCallback(), pack.getIp(), pack.getPort());
             GUIManager.setOnDrawEvent(client::send);
+            GUIManager.setOnMessageEvent(client::send);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +62,6 @@ public class GUI_Host_Test {
     }
 
     public static void main(String[] args) {
-        new GUI_Host_Test();
+        new GUI_Test();
     }
 }
