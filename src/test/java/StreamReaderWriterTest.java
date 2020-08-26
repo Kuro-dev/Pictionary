@@ -40,7 +40,7 @@ public class StreamReaderWriterTest {
     }
     @Test
     public void canReadAndWriteParticipantFromStreams() throws IOException {
-        Encodable en = new Participant("name",50);
+        Encodable en = new Participant("name", 0);
         testStreamRead(en);
     }
 
