@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 public class GUIGetInfo {
 
@@ -70,7 +71,7 @@ public class GUIGetInfo {
     private void initialize() {
 
         frame = new JFrame("TITLE");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setLayout(lay_frm = new GridBagLayout());
         frame.getContentPane().setBackground(Color.decode("#11489F"));
 
@@ -257,4 +258,7 @@ public class GUIGetInfo {
 
     }
 
+    public void dispose() {
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+    }
 }

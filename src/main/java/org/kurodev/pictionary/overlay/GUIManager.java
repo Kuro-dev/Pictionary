@@ -30,6 +30,8 @@ public class GUIManager {
     }
 
     public static PackageHost getHostPackage() {
+        info.dispose();
+
         myself = new Participant(info.fie_name.getText(), Integer.toHexString(info.but_choose_colour.getBackground().hashCode()).substring(0, 6), 0);
         instance = new GUIBody(myself.getName());
         addParticipant(myself);
@@ -37,6 +39,8 @@ public class GUIManager {
     }
 
     public static PackageClient getClientPackage() {
+        info.dispose();
+
         myself = new Participant(info.fie_name.getText(), "" + info.but_choose_colour.getBackground().getRGB(), 0);
         instance = new GUIBody(myself.getName());
         addParticipant(myself);
@@ -48,7 +52,6 @@ public class GUIManager {
         return new NetworkCallback() {
             @Override
             public void onObjectReceived(Encodable obj) {
-                System.out.println("Object received");
 
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;

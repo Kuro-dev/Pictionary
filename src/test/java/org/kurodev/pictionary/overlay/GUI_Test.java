@@ -16,7 +16,6 @@ public class GUI_Test {
         GUIManager.instantiate(this::host_game, this::join_game);
     }
 
-
     /**
      * The GUIM calls this method if
      * the player chooses to host the game.
