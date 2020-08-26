@@ -9,15 +9,15 @@ import java.util.Objects;
 /**
  * @author kuro
  **/
-public class Message implements Encodable {
+public class Command implements Encodable {
     private String msg;
     private long time;
 
-    public Message(EasyByteReader bytes) {
+    public Command(EasyByteReader bytes) {
         decode(bytes);
     }
 
-    public Message(String msg) {
+    public Command(String msg) {
         time = System.currentTimeMillis();
         this.msg = msg;
     }
@@ -34,7 +34,7 @@ public class Message implements Encodable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
+        Command message = (Command) o;
         return time == message.time &&
                 Objects.equals(msg, message.msg);
     }
