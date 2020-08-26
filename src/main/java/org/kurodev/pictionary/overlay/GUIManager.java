@@ -10,6 +10,7 @@ import org.kurodev.pictionary.overlay.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class GUIManager {
 
@@ -51,6 +52,8 @@ public class GUIManager {
         return new NetworkCallback() {
             @Override
             public void onObjectReceived(Encodable obj) {
+
+                System.out.println(obj);
 
                 if (obj instanceof Pixel) {
                     Pixel pixel = (Pixel) obj;
