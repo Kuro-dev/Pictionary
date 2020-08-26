@@ -6,6 +6,7 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.stream.StreamWriter;
@@ -64,5 +65,12 @@ public class StreamReaderWriterTest {
         assertTrue(image.isTransparent(0, 0));
         assertFalse(image.isTransparent(3, 2));
         testStreamRead(image);
+    }
+
+    @Test
+    public void drawTokenTest() throws IOException {
+        Participant p = new Participant("Kuro", 5);
+        Encodable expected = new DrawToken(p);
+        testStreamRead(expected);
     }
 }

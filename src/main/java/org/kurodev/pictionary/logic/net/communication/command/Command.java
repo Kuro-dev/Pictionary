@@ -1,4 +1,4 @@
-package org.kurodev.pictionary.logic.net.stream;
+package org.kurodev.pictionary.logic.net.communication.command;
 
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
@@ -10,22 +10,22 @@ import java.util.Objects;
  * @author kuro
  **/
 public class Command implements Encodable {
-    private String msg;
+    private String command;
     private long time;
 
     public Command(EasyByteReader bytes) {
         decode(bytes);
     }
 
-    public Command(String msg) {
+    public Command(String command) {
         time = System.currentTimeMillis();
-        this.msg = msg;
+        this.command = command;
     }
 
     @Override
     public String toString() {
-        return "Message{" +
-                "msg='" + msg + '\'' +
+        return "Command{" +
+                "msg='" + command + '\'' +
                 ", time=" + time +
                 '}';
     }
@@ -36,23 +36,23 @@ public class Command implements Encodable {
         if (o == null || getClass() != o.getClass()) return false;
         Command message = (Command) o;
         return time == message.time &&
-                Objects.equals(msg, message.msg);
+                Objects.equals(command, message.command);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(msg, time);
+        return Objects.hash(command, time);
     }
 
     @Override
     public void decode(EasyByteReader data) {
         time = data.readLong();
-        msg = data.readString();
+        command = data.readString();
     }
 
     @Override
     public void encode(EasyByteWriter out) {
         out.write(time);
-        out.write(msg);
+        out.write(command);
     }
 }

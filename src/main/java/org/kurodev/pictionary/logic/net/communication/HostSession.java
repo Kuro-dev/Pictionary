@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.logic.net.communication;
 
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 
 import java.io.IOException;
@@ -8,8 +9,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author kuro
@@ -18,9 +21,11 @@ public class HostSession implements Runnable, NetHandler {
     private final String username;
     private final ServerSocket socket;
     private final List<NetClient> clients = new ArrayList<>();
+    private final List<NetClient> hasDrawn = new ArrayList<>();
     private final NetworkCallback callback;
     private int playerCount = 0;
     private CountDownLatch latch = new CountDownLatch(1);
+    private int fullRounds = 0;
 
     public HostSession(String username, ServerSocket socket, NetworkCallback callback) {
         this.socket = socket;
@@ -110,5 +115,35 @@ public class HostSession implements Runnable, NetHandler {
 
     public void send(Encodable obj, NetClient client) {
         client.getHandler().send(obj);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Randomly selects the next participant who has not drawn in this round and automatically sends the information to all clients.
+     *
+     * @return the next participant to be passed to draw.
+     */
+    public NetClient evaluateNextDrawer() {
+        List<NetClient> available = clients.stream().filter(netClient -> !hasDrawn.contains(netClient)).collect(Collectors.toList());
+        if (available.size() == 0) {
+            available = clients;
+            hasDrawn.clear();
+            fullRounds += 1;
+        }
+        NetClient next = available.get(new Random().nextInt(available.size()));
+        hasDrawn.add(next);
+        DrawToken token = new DrawToken(next.getClient());
+        send(token);
+        return next;
+    }
+
+    /**
+     * @return the amount of times that every client has had the chance to draw. please check this after each {@link #evaluateNextDrawer()} call.
+     */
+    public int getFullRounds() {
+        return fullRounds;
     }
 }
