@@ -31,7 +31,7 @@ public class GUIManager {
     public static PackageHost getHostPackage() {
         info.dispose();
 
-        myself = new Participant(info.fie_name.getText(), Integer.toHexString(info.but_choose_colour.getBackground().hashCode()).substring(0, 6), 0);
+        myself = new Participant(info.fie_name.getText(), info.but_choose_colour.getBackground().getRGB(), 0);
         instance = new GUIBody(myself.getName());
         addParticipant(myself);
         return new PackageHost(((SpinnerMinuteModel) info.spin_time.getModel()).getTimeAsInt(), info.fie_customwords.getText().split(" "), Integer.parseInt(info.fie_port_h.getText()));
@@ -40,7 +40,7 @@ public class GUIManager {
     public static PackageClient getClientPackage() {
         info.dispose();
 
-        myself = new Participant(info.fie_name.getText(), "" + info.but_choose_colour.getBackground().getRGB(), 0);
+        myself = new Participant(info.fie_name.getText(), info.but_choose_colour.getBackground().getRGB(), 0);
         instance = new GUIBody(myself.getName());
         addParticipant(myself);
         return new PackageClient(info.fie_ip.getText(), Integer.parseInt(info.fie_port_j.getText()));
@@ -132,7 +132,7 @@ public class GUIManager {
         }
 
         participant_list.stream().filter(participant -> participant.getName().equals(name)).findFirst().ifPresent(participant -> {
-            chat_text += "<BR /><FONT face='Calibri' color=\"#" + Integer.toHexString(new Color(Integer.parseInt(participant.getColour(), 16)).hashCode()) + "\"><B>" + name + ":</B> " + message + "</FONT>";
+            chat_text += "<BR /><FONT face='Calibri' color=\"#" + Integer.toHexString(participant.getColour()) + "\"><B>" + name + ":</B> " + message + "</FONT>";
             instance.txt_scp_rht_mid.setText("<HTML><BODY>" + chat_text + "</HTML></BODY>");
         });
 
