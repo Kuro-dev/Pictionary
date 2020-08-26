@@ -70,7 +70,7 @@ public enum Code {
                     return e;
                 }
             }
-            throw new EncodingException("Could not decode " + Arrays.toString(encoded));
+            throw new EncodingException(String.format("No Suitable Constructor found for %s(%s):\n%s", this.name(), this.clazz.getSimpleName(), Arrays.toString(encoded)));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new EncodingException(e);
         }
