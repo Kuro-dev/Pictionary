@@ -16,6 +16,7 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
 
     GUIBody root;
     NetHandler sender = null;
+    boolean isEnabled = false;
 
     Graphics g;
 
@@ -37,6 +38,7 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        if(!isEnabled) return;
         drawPoint(e.getX(), e.getY(), brush_size);
         if (sender != null) sender.send(new Pixel(e.getX(), e.getY(), brush_size, g.getColor().getRGB()));
     }
@@ -63,5 +65,9 @@ public class DrawEventHandler implements MouseMotionListener, MouseWheelListener
 
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
+
+    public void setEnabled(boolean b) {
+        isEnabled = b;
     }
 }

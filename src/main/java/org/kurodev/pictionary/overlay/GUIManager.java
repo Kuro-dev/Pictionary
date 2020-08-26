@@ -4,6 +4,7 @@ import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.NetHandler;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.util.*;
@@ -17,7 +18,7 @@ public class GUIManager {
 
     static GUIGetInfo info;
     private static GUIBody instance;
-    static Participant myself;
+    public static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
 
     static NetHandler message_sender = null;
@@ -66,6 +67,10 @@ public class GUIManager {
                 } else if (obj instanceof MessageEncodable) {
                     MessageEncodable msg = (MessageEncodable) obj;
                     sendChat(msg.getName(), msg.getMessage());
+
+                } else if (obj instanceof DrawToken) {
+                    instance.draw_event_handle.setEnabled(true);
+
                 }
             }
 
@@ -77,11 +82,8 @@ public class GUIManager {
 
     }
 
-    public static void setOnDrawEvent(NetHandler sender) {
+    public static void setNetHandler(NetHandler sender) {
         instance.draw_event_handle.setSessionToRespond(sender);
-    }
-
-    public static void setOnMessageEvent(NetHandler sender) {
         message_sender = sender;
     }
 
