@@ -84,6 +84,9 @@ public class GUI_Test {
         GUIManager.setOnDrawEvent(session::send);
         GUIManager.setOnMessageEvent(session::send);
 
+        GUIManager.sendChat("a", "A");
+        GUIManager.sendChat("b", "B");
+
         // TODO
         // This basically applies to when actual game logic is created
         /*
