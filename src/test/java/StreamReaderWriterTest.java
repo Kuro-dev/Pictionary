@@ -10,6 +10,7 @@ import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.stream.StreamWriter;
+import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -71,6 +72,12 @@ public class StreamReaderWriterTest {
     public void drawTokenTest() throws IOException {
         Participant p = new Participant("Kuro", 5);
         Encodable expected = new DrawToken(p);
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void messageEncodableTest() throws IOException {
+        Encodable expected = new MessageEncodable("Kuro", "Hello");
         testStreamRead(expected);
     }
 }

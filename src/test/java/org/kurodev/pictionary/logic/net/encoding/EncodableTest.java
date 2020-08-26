@@ -11,6 +11,7 @@ import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
 import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
+import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -70,6 +71,13 @@ public class EncodableTest {
         Participant p = new Participant("Kuro", 5);
         Encodable expected = new DrawToken(p);
         Encodable actual = new DrawToken(new Participant(""));
+        run(expected, actual);
+    }
+
+    @Test
+    public void messageEncodableTest() {
+        Encodable expected = new MessageEncodable("Kuro", "Hello");
+        Encodable actual = new MessageEncodable("", "");
         run(expected, actual);
     }
 }
