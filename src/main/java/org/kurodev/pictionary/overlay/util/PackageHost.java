@@ -16,4 +16,8 @@ public class PackageHost {
     public int getPort() {
         return port;
     }
+
+    public int getTime() {
+        return time;
+    }
 }

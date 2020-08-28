@@ -81,8 +81,7 @@ public class GUI_Test {
         * to act accordingly when something
         * is draw or a message is sent.
         * */
-        GUIManager.setOnDrawEvent(session::send);
-        GUIManager.setOnMessageEvent(session::send);
+        GUIManager.setNetHandler(session::send);
 
         GUIManager.sendChat("a", "A");
         GUIManager.sendChat("b", "B");
@@ -113,8 +112,7 @@ public class GUI_Test {
 
         try {
             NetworkHandler client = Session.join(GUIManager.myself, GUIManager.getMyCallback(), pack.getIp(), pack.getPort());
-            GUIManager.setOnDrawEvent(client::send);
-            GUIManager.setOnMessageEvent(client::send);
+            GUIManager.setNetHandler(client::send);
         } catch (IOException e) {
             e.printStackTrace();
         }

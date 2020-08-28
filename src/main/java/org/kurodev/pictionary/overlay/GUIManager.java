@@ -4,6 +4,7 @@ import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.NetHandler;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.overlay.factory.GBC;
 import org.kurodev.pictionary.overlay.util.*;
@@ -17,8 +18,9 @@ public class GUIManager {
 
     static GUIGetInfo info;
     private static GUIBody instance;
-    static Participant myself;
+    public static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
+    static NetworkCallback game_callback = null;
 
     static NetHandler message_sender = null;
 
@@ -66,7 +68,14 @@ public class GUIManager {
                 } else if (obj instanceof MessageEncodable) {
                     MessageEncodable msg = (MessageEncodable) obj;
                     sendChat(msg.getName(), msg.getMessage());
+
+                } else if (obj instanceof DrawToken) {
+                    instance.draw_event_handle.setEnabled(true);
+
                 }
+
+                if (game_callback != null) game_callback.onObjectReceived(obj);
+
             }
 
             @Override
@@ -77,11 +86,8 @@ public class GUIManager {
 
     }
 
-    public static void setOnDrawEvent(NetHandler sender) {
+    public static void setNetHandler(NetHandler sender) {
         instance.draw_event_handle.setSessionToRespond(sender);
-    }
-
-    public static void setOnMessageEvent(NetHandler sender) {
         message_sender = sender;
     }
 
@@ -107,7 +113,7 @@ public class GUIManager {
 
     }
 
-    public static void updateScore(String name, int score) {
+    public static void setScore(String name, int score) {
         for (int i = 0; i < participant_list.size(); i++)
             if (participant_list.get(i).getName().equals(name))
                 participant_list.get(i).setScore(score);
@@ -141,6 +147,22 @@ public class GUIManager {
 
     public static void setTime(int min, int sec) {
         instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
+    }
+
+    public static void setGame_callback(NetworkCallback game_callback) {
+        GUIManager.game_callback = game_callback;
+    }
+
+    public static void setHint(String hint) {
+        instance.lbl_hint_top.setText(hint);
+    }
+
+    public static void setTime(int time) {
+        setTime(time / 60, time % 60);
+    }
+
+    public static void setDrawing(boolean mark) {
+        instance.draw_event_handle.setEnabled(mark);
     }
 
 }
