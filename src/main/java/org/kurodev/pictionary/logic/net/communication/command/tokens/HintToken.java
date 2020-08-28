@@ -26,4 +26,8 @@ public class HintToken extends Token {
     public void encode(EasyByteWriter out) {
         out.write(hint);
     }
+
+    public String getHint() {
+        return hint;
+    }
 }

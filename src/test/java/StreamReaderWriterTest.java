@@ -74,5 +74,5 @@ public class StreamReaderWriterTest {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
         testStreamRead(expected);
     }
-    
+
 }
