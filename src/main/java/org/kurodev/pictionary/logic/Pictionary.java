@@ -1,17 +1,19 @@
 package org.kurodev.pictionary.logic;
 
+import org.kurodev.pictionary.logic.net.communication.command.tokens.HintToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
-import org.kurodev.pictionary.logic.timer.Countdown;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * @author kuro
  **/
 public class Pictionary implements Encodable {
-    private final Countdown timer;
+    private final List<Integer> hintedLetters = new ArrayList<>();
     private int timerTime;
     private String word;
     private boolean won = false;
@@ -19,7 +21,6 @@ public class Pictionary implements Encodable {
     public Pictionary(String word, int time) {
         this.word = word;
         timerTime = time;
-        timer = new Countdown(time);
     }
 
     public Pictionary(int time) {
@@ -71,10 +72,6 @@ public class Pictionary implements Encodable {
         return won;
     }
 
-    public boolean isGameOver() {
-        return won || timer.getCurrentTime() == 0;
-    }
-
     public void submit(String solution) {
         if (!won)
             won = word.equalsIgnoreCase(solution);
@@ -84,7 +81,11 @@ public class Pictionary implements Encodable {
         return word;
     }
 
-    public Countdown getTimer() {
-        return timer;
+    public String getWordHidden() {
+        return "*".repeat(word.length());
+    }
+
+    public HintToken getHint() {
+        return new HintToken("");
     }
 }
