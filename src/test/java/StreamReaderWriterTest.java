@@ -74,10 +74,5 @@ public class StreamReaderWriterTest {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
         testStreamRead(expected);
     }
-
-    @Test
-    public void IGiveYouThreeWordsToChooseFromTest() throws IOException {
-        Encodable expected = new IGiveYouThreeWordsToChooseFrom("A", "B", "C");
-        testStreamRead(expected);
-    }
+    
 }
