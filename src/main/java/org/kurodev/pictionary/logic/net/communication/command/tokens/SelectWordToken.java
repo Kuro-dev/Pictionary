@@ -54,8 +54,4 @@ public class SelectWordToken extends Token {
     public void encode(EasyByteWriter out) {
         out.write(Arrays.toString(words));
     }
-
-    public String[] getWords() {
-        return words;
-    }
 }
