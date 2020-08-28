@@ -1,11 +1,14 @@
 package org.kurodev.pictionary.game;
 
 import org.kurodev.pictionary.game.util.*;
+import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.communication.HostSession;
 import org.kurodev.pictionary.logic.net.communication.NetClient;
 import org.kurodev.pictionary.logic.net.communication.NetworkHandler;
 import org.kurodev.pictionary.logic.net.communication.Session;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.SelectWordToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.TimeToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.timer.Countdown;
 import org.kurodev.pictionary.overlay.GUIManager;
@@ -83,7 +86,7 @@ public class Launcher {
         drawer = session.evaluateNextDrawer();
 //             Pick 3 from wordlist and send it to drawer
 //            drawer.getHandler().send();
-        drawer.getHandler().send(new IGiveYouThreeWordsToChooseFrom("Apple", "Bapple", "Capple"));
+        drawer.getHandler().send(new SelectWordToken("Apple", "Bapple", "Capple"));
 
     }
 
@@ -97,9 +100,9 @@ public class Launcher {
         @Override
         public void onObjectReceived(Encodable obj) {
 
-            if (obj instanceof IGottaDrawThisWord) {
+            if (obj instanceof Pictionary) {
                 // Receiving this object means, the drawer has selected a word and has started drawing.
-                IGottaDrawThisWord choice = (IGottaDrawThisWord) obj;
+                Pictionary choice = (Pictionary) obj;
                 word = choice.getWord();
 
                 // Sending a hint as a series of '_' the length of the word.
@@ -144,7 +147,7 @@ public class Launcher {
                         }
 
                         // Updating the clients of the time.
-                        session.send(new Time(remaining));
+                        session.send(new TimeToken(remaining));
 
                         remainingtime = remaining;
                     }
@@ -158,7 +161,7 @@ public class Launcher {
                     session.send(new GameEndedAndHereIsTheScore(drawer.getClient().getName(), remainingtime / 2));
                     counter.reset();
                     drawer = session.evaluateNextDrawer();
-                    drawer.getHandler().send(new IGiveYouThreeWordsToChooseFrom("Apple", "Bapple", "Capple"));
+                    drawer.getHandler().send(new SelectWordToken("Apple", "Bapple", "Capple"));
                 }
             }
 
@@ -198,18 +201,18 @@ public class Launcher {
         public void onObjectReceived(Encodable obj) {
 
             // Receiving this object mean that this client has been chosen to be the drawer
-            if (obj instanceof IGiveYouThreeWordsToChooseFrom) {
+            if (obj instanceof SelectWordToken) {
                 // Get the user to choose from one of the words.
                 // and the button action to send the word.
                 // till then
-                client.send(new IGottaDrawThisWord(((IGiveYouThreeWordsToChooseFrom) obj).get(0)));
+                client.send(new Pictionary(((SelectWordToken) obj).getWords()[0]));
                 GUIManager.setDrawing(true);
 
             } else if (obj instanceof TakeThisAsTheHint) {
                 GUIManager.setHint(((TakeThisAsTheHint) obj).getHint());
 
-            } else if (obj instanceof Time) {
-                GUIManager.setTime(((Time) obj).getTime());
+            } else if (obj instanceof TimeToken) {
+                GUIManager.setTime(((TimeToken) obj).getTime());
 
             } else if (obj instanceof GameEndedAndHereIsTheScore) {
                 GameEndedAndHereIsTheScore sc = (GameEndedAndHereIsTheScore) obj;

@@ -42,4 +42,9 @@ public class TimeToken extends Token {
     public void encode(EasyByteWriter out) {
         out.write(remaining);
     }
+
+
+    public int getTime() {
+        return remaining;
+    }
 }

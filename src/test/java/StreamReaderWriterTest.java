@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
  **/
 @RunWith(JUnitParamsRunner.class)
 public class StreamReaderWriterTest {
+
     public void testStreamRead(Encodable e) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         StreamWriter writer = new StreamWriter(bos);
@@ -73,4 +74,5 @@ public class StreamReaderWriterTest {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
         testStreamRead(expected);
     }
+    
 }

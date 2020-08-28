@@ -38,4 +38,7 @@ public class GameEndedAndHereIsTheScore implements Encodable {
     public int getScore() {
         return score;
     }
+
+
+
 }
