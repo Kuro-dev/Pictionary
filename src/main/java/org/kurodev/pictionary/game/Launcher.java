@@ -1,25 +1,38 @@
 package org.kurodev.pictionary.game;
 
+import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.communication.HostSession;
 import org.kurodev.pictionary.logic.net.communication.NetClient;
 import org.kurodev.pictionary.logic.net.communication.NetworkHandler;
 import org.kurodev.pictionary.logic.net.communication.Session;
+import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.timer.Countdown;
 import org.kurodev.pictionary.overlay.GUIManager;
 import org.kurodev.pictionary.overlay.util.PackageClient;
 import org.kurodev.pictionary.overlay.util.PackageHost;
 
 import java.io.IOException;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class Launcher {
 
     Countdown counter;
 
+    PackageHost host_pack;
+    HostSession session;
+
     public Launcher() {
 
-        GUIManager.instantiate(this::host_game, this::join_game);
+        GUIManager.instantiate(this::host_game, this::join_game, new NetworkCallback() {
+            @Override
+            public void onObjectReceived(Encodable obj) {
+                onObjectReceived(obj);
+            }
+
+            @Override
+            public void onConnectionLost(Exception e) {
+            }
+        });
 
     }
 /*
@@ -42,8 +55,8 @@ public class Launcher {
 
         // NETWORK INIT: HOST (Action#Event)
         int players = 1;
-        PackageHost pack = GUIManager.getHostPackage();
-        HostSession session = Session.host(GUIManager.myself.getName(), pack.getPort(), GUIManager.getMyCallback());
+        host_pack = GUIManager.getHostPackage();
+        session = Session.host(GUIManager.myself.getName(), host_pack.getPort(), GUIManager.getMyCallback());
 
         session.open(players);
         if (!session.awaitConnections(30, TimeUnit.SECONDS)) throw new RuntimeException("Session Timed Out!");
@@ -55,7 +68,7 @@ public class Launcher {
 
         // STARTING GAME
         NetClient drawer = session.evaluateNextDrawer();
-        counter = new Countdown(pack.getTime(), remaining -> {
+        counter = new Countdown(host_pack.getTime(), remaining -> {
 
 //             Pick 3 from wordlist and send it to drawer
 //            drawer.getHandler().send();
@@ -83,7 +96,9 @@ public class Launcher {
 
     }
 
-    public void tick(int time) {
+    public void onObjectReceived(Encodable obj) {
+
+
 
     }
 

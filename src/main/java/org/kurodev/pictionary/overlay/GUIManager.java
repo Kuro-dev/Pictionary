@@ -20,13 +20,15 @@ public class GUIManager {
     private static GUIBody instance;
     public static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
+    static NetworkCallback game_callback;
 
     static NetHandler message_sender = null;
 
-    public static void instantiate(Runnable if_hosted, Runnable if_joined) {
+    public static void instantiate(Runnable if_hosted, Runnable if_joined, NetworkCallback _game_callback) {
 
         info = new GUIGetInfo();
 
+        game_callback = _game_callback;
         info.but_start_host.addActionListener(e -> if_hosted.run());
         info.but_start_join.addActionListener(e -> if_joined.run());
     }
@@ -72,6 +74,9 @@ public class GUIManager {
                     instance.draw_event_handle.setEnabled(true);
 
                 }
+
+                game_callback.onObjectReceived(obj);
+
             }
 
             @Override
