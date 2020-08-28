@@ -4,6 +4,8 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
+import java.util.Objects;
+
 public class IGottaDrawThisWord implements Encodable {
 
     String word;
@@ -28,5 +30,18 @@ public class IGottaDrawThisWord implements Encodable {
 
     public String getWord() {
         return word;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IGottaDrawThisWord that = (IGottaDrawThisWord) o;
+        return Objects.equals(word, that.word);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(word);
     }
 }

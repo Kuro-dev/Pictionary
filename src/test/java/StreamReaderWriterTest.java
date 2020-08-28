@@ -2,6 +2,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kurodev.pictionary.game.util.IGiveYouThreeWordsToChooseFrom;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
@@ -23,6 +24,7 @@ import static org.junit.Assert.*;
  **/
 @RunWith(JUnitParamsRunner.class)
 public class StreamReaderWriterTest {
+
     public void testStreamRead(Encodable e) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         StreamWriter writer = new StreamWriter(bos);
@@ -78,6 +80,12 @@ public class StreamReaderWriterTest {
     @Test
     public void messageEncodableTest() throws IOException {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void IGiveYouThreeWordsToChooseFromTest() throws IOException {
+        Encodable expected = new IGiveYouThreeWordsToChooseFrom("A", "B", "C");
         testStreamRead(expected);
     }
 }

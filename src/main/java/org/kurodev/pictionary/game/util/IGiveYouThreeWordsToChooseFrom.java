@@ -4,6 +4,8 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
+import java.util.Objects;
+
 public class IGiveYouThreeWordsToChooseFrom implements Encodable {
 
     String a, b, c;
@@ -34,5 +36,29 @@ public class IGiveYouThreeWordsToChooseFrom implements Encodable {
 
     public String get(int i) {
         return i == 0 ? a : (i == 1 ? b : c);
+    }
+
+    @Override
+    public String toString() {
+        return "IGiveYouThreeWordsToChooseFrom{" +
+                "a='" + a + '\'' +
+                ", b='" + b + '\'' +
+                ", c='" + c + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IGiveYouThreeWordsToChooseFrom that = (IGiveYouThreeWordsToChooseFrom) o;
+        return Objects.equals(a, that.a) &&
+                Objects.equals(b, that.b) &&
+                Objects.equals(c, that.c);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(a, b, c);
     }
 }
