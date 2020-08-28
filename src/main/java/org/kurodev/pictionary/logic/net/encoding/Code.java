@@ -1,12 +1,11 @@
 package org.kurodev.pictionary.logic.net.encoding;
 
-import org.kurodev.pictionary.game.util.*;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
-import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.*;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
@@ -18,19 +17,18 @@ import java.util.Arrays;
  * @author kuro
  **/
 public enum Code {
-    CHOICE(IGottaDrawThisWord.class),
-    COMMAND(Command.class),
-    DRAW_TOKEN(DrawToken.class),
-    GAME(Pictionary.class),
-    GAMESTARTER(GameStarter.class),
+    PIXEL(Pixel.class),
     IMAGE(Image.class),
+    GAME(Pictionary.class),
+    COMMAND(Command.class),
     MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
-    PIXEL(Pixel.class),
-    SCORE(GameEndedAndHereIsTheScore.class),
-    STARTER(TakeThisAsTheHint.class),
-    TIME(Time.class),
-    TRIO(IGiveYouThreeWordsToChooseFrom.class),
+    //TOKENS,
+    DRAW_TOKEN(DrawToken.class),
+    TIMEOUT_TOKEN(TimeOutToken.class),
+    CORRECT_GUESS(CorrectGuessToken.class),
+    TIME_TOKEN(TimeToken.class),
+    WORD_SELECT(SelectWordToken.class),
     ;
 
     private final Class<? extends Encodable> clazz;

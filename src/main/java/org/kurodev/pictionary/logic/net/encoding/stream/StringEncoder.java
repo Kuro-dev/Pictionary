@@ -74,4 +74,11 @@ public class StringEncoder {
         }
         throw new IllegalArgumentException("Length must not be 0");
     }
+
+    public static String[] interpretArray(String arrayString) {
+        arrayString = arrayString.replaceFirst("\\[", "")
+                .replace("]", "")
+                .replaceAll("\\s{2,}", " ");
+        return arrayString.split(", ");
+    }
 }

@@ -9,7 +9,7 @@ import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
-import org.kurodev.pictionary.logic.net.communication.command.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.DrawToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
