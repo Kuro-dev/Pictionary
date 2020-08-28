@@ -85,10 +85,20 @@ public class Pictionary implements Encodable {
     }
 
     public String getWordHidden() {
-        return HIDDEN.repeat(word.length());
+        StringBuilder sb = new StringBuilder(word.length());
+        String[] split = word.split(" ");
+        for (int i = 0, splitLength = split.length; i < splitLength; i++) {
+            String s = split[i];
+            sb.append(HIDDEN.repeat(s.length()));
+            if (i < (splitLength - 1)) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 
     public HintToken getHint() {
+        String word = getWordHidden();
         StringBuilder hint = new StringBuilder(word.length());
         boolean notHinted = true;
         if (hintedLetters.size() < word.length() / 2) {
@@ -98,7 +108,7 @@ public class Pictionary implements Encodable {
         for (int i = 0; i < word.length(); i++) {
             for (Integer integer : hintedLetters) {
                 if (i == integer) {
-                    hint.append(word.charAt(integer));
+                    hint.append(this.word.charAt(integer));
                     notHinted = false;
                     break;
                 } else {
@@ -106,7 +116,7 @@ public class Pictionary implements Encodable {
                 }
             }
             if (notHinted)
-                hint.append(HIDDEN);
+                hint.append(word.charAt(i));
         }
         return new HintToken(hint.toString());
     }

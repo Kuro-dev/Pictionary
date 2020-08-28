@@ -3,6 +3,8 @@ package org.kurodev.pictionary.logic.net.communication.command.tokens;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
+import java.util.Objects;
+
 /**
  * @author kuro
  **/
@@ -20,6 +22,23 @@ public class HintToken extends Token {
     @Override
     public void decode(EasyByteReader data) {
         hint = data.readString();
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HintToken hintToken = (HintToken) o;
+        return Objects.equals(hint, hintToken.hint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hint);
     }
 
     @Override
