@@ -6,6 +6,7 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 /**
  * @author kuro
  **/
+@Deprecated(forRemoval = true)
 public class TimeOutToken extends Token {
     public TimeOutToken() {
     }
