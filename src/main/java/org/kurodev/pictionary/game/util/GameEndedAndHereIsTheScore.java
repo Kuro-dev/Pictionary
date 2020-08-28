@@ -4,17 +4,17 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
-public class Score implements Encodable {
+public class GameEndedAndHereIsTheScore implements Encodable {
 
     String name;
     int score;
 
-    public Score(String name, int score) {
+    public GameEndedAndHereIsTheScore(String name, int score) {
         this.name = name;
         this.score = score;
     }
 
-    public Score(EasyByteReader d) {
+    public GameEndedAndHereIsTheScore(EasyByteReader d) {
         decode(d);
     }
 

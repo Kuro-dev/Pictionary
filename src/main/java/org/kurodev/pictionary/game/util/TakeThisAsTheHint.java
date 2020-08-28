@@ -4,14 +4,14 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
-public class Starter implements Encodable {
+public class TakeThisAsTheHint implements Encodable {
     String hint;
 
-    public Starter(String hint) {
+    public TakeThisAsTheHint(String hint) {
         this.hint = hint;
     }
 
-    public Starter(EasyByteReader dat) {
+    public TakeThisAsTheHint(EasyByteReader dat) {
         decode(dat);
     }
 

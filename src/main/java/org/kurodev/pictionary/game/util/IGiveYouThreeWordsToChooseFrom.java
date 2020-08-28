@@ -4,17 +4,17 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
-public class Trio implements Encodable {
+public class IGiveYouThreeWordsToChooseFrom implements Encodable {
 
     String a, b, c;
 
-    public Trio(String a, String b, String c) {
+    public IGiveYouThreeWordsToChooseFrom(String a, String b, String c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
 
-    public Trio(EasyByteReader data) {
+    public IGiveYouThreeWordsToChooseFrom(EasyByteReader data) {
         decode(data);
     }
 

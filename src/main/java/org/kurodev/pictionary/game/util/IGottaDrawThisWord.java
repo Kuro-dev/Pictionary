@@ -4,15 +4,15 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
-public class Choice implements Encodable {
+public class IGottaDrawThisWord implements Encodable {
 
     String ch;
 
-    public Choice(String ch) {
+    public IGottaDrawThisWord(String ch) {
         this.ch = ch;
     }
 
-    public Choice(EasyByteReader data) {
+    public IGottaDrawThisWord(EasyByteReader data) {
         decode(data);
     }
 
