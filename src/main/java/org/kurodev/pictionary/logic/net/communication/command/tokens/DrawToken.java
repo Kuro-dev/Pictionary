@@ -7,6 +7,8 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import java.util.Objects;
 
 /**
+ * Specifies which Participant is currently allowed to Draw.
+ *
  * @author kuro
  **/
 public class DrawToken extends Token {
