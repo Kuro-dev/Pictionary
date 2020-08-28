@@ -6,10 +6,10 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 
 public class IGottaDrawThisWord implements Encodable {
 
-    String ch;
+    String word;
 
     public IGottaDrawThisWord(String ch) {
-        this.ch = ch;
+        this.word = ch;
     }
 
     public IGottaDrawThisWord(EasyByteReader data) {
@@ -18,15 +18,15 @@ public class IGottaDrawThisWord implements Encodable {
 
     @Override
     public void decode(EasyByteReader data) {
-        ch = data.readString();
+        word = data.readString();
     }
 
     @Override
     public void encode(EasyByteWriter out) {
-        out.write(ch);
+        out.write(word);
     }
 
     public String getWord() {
-        return ch;
+        return word;
     }
 }
