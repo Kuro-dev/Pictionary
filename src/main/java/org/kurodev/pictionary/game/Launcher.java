@@ -8,6 +8,8 @@ import org.kurodev.pictionary.logic.net.communication.HostSession;
 import org.kurodev.pictionary.logic.net.communication.NetClient;
 import org.kurodev.pictionary.logic.net.communication.NetworkHandler;
 import org.kurodev.pictionary.logic.net.communication.Session;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.HintToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.ScoreToken;
 import org.kurodev.pictionary.logic.net.communication.command.tokens.SelectWordToken;
 import org.kurodev.pictionary.logic.net.communication.command.tokens.TimeToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
@@ -107,7 +109,7 @@ public class Launcher {
                 word = choice.getWord();
 
                 // Sending a hint as a series of '_' the length of the word.
-                session.send(new TakeThisAsTheHint("_".repeat(choice.getWord().length())));
+                session.send(choice.getHint());
 
                 /*
                  * Setting up a server side counter to:
@@ -127,24 +129,24 @@ public class Launcher {
                      * game has ended.
                      * */
                     if (remaining <= 1) {
-                        session.send(new GameEndedAndHereIsTheScore(drawer.getClient().getName(), -host_pack.getTime() / 3));
+                        session.send(new ScoreToken(drawer.getClient().getName(), -host_pack.getTime() / 3));
 
                     } else {
 
-                        // when two third time is remaining give a better hint, revealing one letter
                         if (host_pack.getTime() * 2 / 3 == remaining) {
                             System.out.println("two third");
-                            int sp = (int) (Math.random() * word.length());
-                            session.send(new TakeThisAsTheHint("_".repeat(sp) + word.charAt(sp) + "_".repeat(word.length() - sp - 1)));
+                            session.send(choice.getHint());
+//                            int sp = (int) (Math.random() * word.length());
+//                            session.send(new TakeThisAsTheHint("_".repeat(sp) + word.charAt(sp) + "_".repeat(word.length() - sp - 1)));
 
-                            // revealing 2 letters
                         } else if (host_pack.getTime() / 3 == remaining) {
                             System.out.println("one third");
-                            int sp = (int) (Math.random() * choice.getWord().length());
-                            String hint = "_".repeat(sp) + word.charAt(sp) + "_".repeat(word.length() - sp - 1);
-                            sp = (int) (Math.random() * choice.getWord().length());
-                            hint = "_".repeat(sp) + hint.charAt(sp) + "_".repeat(hint.length() - sp - 1);
-                            session.send(new TakeThisAsTheHint(hint));
+                            session.send(choice.getHint());
+//                            int sp = (int) (Math.random() * choice.getWord().length());
+//                            String hint = "_".repeat(sp) + word.charAt(sp) + "_".repeat(word.length() - sp - 1);
+//                            sp = (int) (Math.random() * choice.getWord().length());
+//                            hint = "_".repeat(sp) + hint.charAt(sp) + "_".repeat(hint.length() - sp - 1);
+//                            session.send(new TakeThisAsTheHint(hint));
                         }
 
                         // Updating the clients of the time.
@@ -158,8 +160,8 @@ public class Launcher {
             } else if (obj instanceof MessageEncodable) {
                 MessageEncodable e = (MessageEncodable) obj;
                 if (e.getMessage().equalsIgnoreCase(word)) {
-                    session.send(new GameEndedAndHereIsTheScore(e.getName(), remainingtime));
-                    session.send(new GameEndedAndHereIsTheScore(drawer.getClient().getName(), remainingtime / 2));
+                    session.send(new ScoreToken(e.getName(), remainingtime));
+                    session.send(new ScoreToken(drawer.getClient().getName(), remainingtime / 2));
                     counter.reset();
                     //drawer = session.evaluateNextDrawer();
                     drawer.getHandler().send(new SelectWordToken("Apple", "Bapple", "Capple"));
@@ -209,14 +211,14 @@ public class Launcher {
                 client.send(new Pictionary(((SelectWordToken) obj).getWords()[0]));
                 GUIManager.setDrawing(true);
 
-            } else if (obj instanceof TakeThisAsTheHint) {
-                GUIManager.setHint(((TakeThisAsTheHint) obj).getHint());
+            } else if (obj instanceof HintToken) {
+                GUIManager.setHint(((HintToken) obj).getHint());
 
             } else if (obj instanceof TimeToken) {
                 GUIManager.setTime(((TimeToken) obj).getTime());
 
-            } else if (obj instanceof GameEndedAndHereIsTheScore) {
-                GameEndedAndHereIsTheScore sc = (GameEndedAndHereIsTheScore) obj;
+            } else if (obj instanceof ScoreToken) {
+                ScoreToken sc = (ScoreToken) obj;
                 GUIManager.setScore(sc.getName(), sc.getScore());
                 GUIManager.setDrawing(false);
             }

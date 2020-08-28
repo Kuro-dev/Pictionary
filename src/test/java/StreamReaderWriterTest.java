@@ -82,5 +82,4 @@ public class StreamReaderWriterTest {
         Encodable expected = new InternalState(State.INITIALIZING);
         testStreamRead(expected);
     }
-
 }
