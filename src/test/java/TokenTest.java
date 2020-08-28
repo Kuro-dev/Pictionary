@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.tokens.*;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.event.Event;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.event.GameEventToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 
 import java.io.IOException;
@@ -18,12 +20,6 @@ public class TokenTest extends StreamReaderWriterTest {
         Participant p = new Participant("Kuro", 5);
         Encodable expected = new DrawToken(p);
         testStreamRead(expected);
-    }
-
-    @Test
-    public void timeOutTokenTest() throws IOException {
-        Token t = new TimeOutToken();
-        testStreamRead(t);
     }
 
     @Test
@@ -48,6 +44,18 @@ public class TokenTest extends StreamReaderWriterTest {
     })
     public void wordSelectTokenTest(String... strings) throws IOException {
         Encodable expected = new SelectWordToken(strings);
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void gameEventTokenTest() throws IOException {
+        Encodable expected = new GameEventToken(Event.GAME_START);
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void scoreTokenTest() throws IOException {
+        Encodable expected = new ScoreToken("kuro", 23);
         testStreamRead(expected);
     }
 }

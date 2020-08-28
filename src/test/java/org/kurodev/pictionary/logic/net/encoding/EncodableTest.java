@@ -10,6 +10,9 @@ import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
 import org.kurodev.pictionary.logic.net.communication.command.tokens.DrawToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.ScoreToken;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.event.Event;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.event.GameEventToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
@@ -78,6 +81,20 @@ public class EncodableTest {
     public void messageEncodableTest() {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
         Encodable actual = new MessageEncodable("", "");
+        run(expected, actual);
+    }
+
+    @Test
+    public void gameEventTokenTest() {
+        Encodable expected = new GameEventToken(Event.GAME_START);
+        Encodable actual = new GameEventToken(Event.GAME_END);
+        run(expected, actual);
+    }
+
+    @Test
+    public void scoreTokenTest() {
+        Encodable expected = new ScoreToken("kuro", 50);
+        Encodable actual = new ScoreToken("tendo", 0);
         run(expected, actual);
     }
 }
