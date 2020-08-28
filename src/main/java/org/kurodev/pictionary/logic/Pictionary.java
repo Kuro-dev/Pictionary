@@ -8,11 +8,13 @@ import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @author kuro
  **/
 public class Pictionary implements Encodable {
+    private static final String HIDDEN = "_";
     private final List<Integer> hintedLetters = new ArrayList<>();
     private int timerTime;
     private String word;
@@ -34,6 +36,7 @@ public class Pictionary implements Encodable {
     public Pictionary(String word) {
         this(word, 90);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -82,10 +85,37 @@ public class Pictionary implements Encodable {
     }
 
     public String getWordHidden() {
-        return "*".repeat(word.length());
+        return HIDDEN.repeat(word.length());
     }
 
     public HintToken getHint() {
-        return new HintToken("");
+        StringBuilder hint = new StringBuilder(word.length());
+        boolean notHinted = true;
+        if (hintedLetters.size() < word.length() / 2) {
+            int a = getNewHint();
+            hintedLetters.add(a);
+        }
+        for (int i = 0; i < word.length(); i++) {
+            for (Integer integer : hintedLetters) {
+                if (i == integer) {
+                    hint.append(word.charAt(integer));
+                    notHinted = false;
+                    break;
+                } else {
+                    notHinted = true;
+                }
+            }
+            if (notHinted)
+                hint.append(HIDDEN);
+        }
+        return new HintToken(hint.toString());
+    }
+
+    private int getNewHint() {
+        int a = new Random().nextInt(word.length());
+        if (hintedLetters.stream().anyMatch(integer -> integer == a)) {
+            return getNewHint();
+        }
+        return a;
     }
 }
