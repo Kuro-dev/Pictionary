@@ -29,7 +29,7 @@ public class PictionaryTest {
         Pictionary pic = new Pictionary("Hello World");
         for (int i = 0; i < 10; i++) {
             assertEquals(pic.getWord().length(), pic.getHint().getHint().length());
-            System.out.println(pic.getHint().getHint());
+//            System.out.println(pic.getHint().getHint());
         }
     }
 }

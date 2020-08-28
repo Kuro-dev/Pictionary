@@ -6,6 +6,8 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.state.InternalState;
+import org.kurodev.pictionary.logic.net.communication.command.state.State;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
@@ -74,5 +76,11 @@ public class StreamReaderWriterTest {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
         testStreamRead(expected);
     }
-    
+
+    @Test
+    public void internalStateTest() throws IOException {
+        Encodable expected = new InternalState(State.INITIALIZING);
+        testStreamRead(expected);
+    }
+
 }
