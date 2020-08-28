@@ -6,7 +6,6 @@ import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -50,6 +49,17 @@ public class NetworkHandler implements NetHandler {
     public void send(Encodable obj) {
         try {
             out.write(obj);
+        } catch (IOException e) {
+            callback.onConnectionLost(e);
+        }
+    }
+
+    @Override
+    public void disconnect() {
+        try {
+            in.close();
+            out.close();
+            socket.close();
         } catch (IOException e) {
             callback.onConnectionLost(e);
         }

@@ -27,6 +27,10 @@ public class DrawToken extends Token {
         this.participant = participant;
     }
 
+    public Participant getParticipant() {
+        return participant;
+    }
+
     @Override
     public void decode(EasyByteReader data) {
         participant = new Participant(data.readEncodable());

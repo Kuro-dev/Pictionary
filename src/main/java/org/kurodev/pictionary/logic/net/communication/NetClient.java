@@ -22,7 +22,7 @@ public class NetClient implements NetworkCallback {
     public void onObjectReceived(Encodable obj) {
         if (obj instanceof Participant) {
             client = (Participant) obj;
-            System.out.println("received client info from " + client.getName());
+//            System.out.println("received client info from " + client.getName());
         }
     }
 

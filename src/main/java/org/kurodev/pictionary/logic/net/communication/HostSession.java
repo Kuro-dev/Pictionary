@@ -6,7 +6,6 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +21,8 @@ public class HostSession implements Runnable, NetHandler {
     private final ServerSocket socket;
     private final List<NetClient> clients = new ArrayList<>();
     private final List<NetClient> hasDrawn = new ArrayList<>();
-    private final NetworkCallback callback;
+    private final NetClient self = new NetClient();
+    private NetworkCallback callback;
     private int playerCount = 0;
     private CountDownLatch latch = new CountDownLatch(1);
     private int fullRounds = 0;
@@ -31,6 +31,14 @@ public class HostSession implements Runnable, NetHandler {
         this.socket = socket;
         this.username = username;
         this.callback = callback;
+        self.onObjectReceived(new Participant(username));
+    }
+
+    public void setCallback(NetworkCallback callback) {
+        this.callback = callback;
+        for (NetClient client : clients) {
+            client.getHandler().setCallback(callback);
+        }
     }
 
     public List<NetClient> getClients() {
@@ -59,17 +67,14 @@ public class HostSession implements Runnable, NetHandler {
      * Sets the Callbacks to the actual GUI and draw callback to start synchronizing the the players.
      */
     public void start() {
-        for (NetClient client : clients) {
-            client.getHandler().setCallback(callback);
-        }
+        setCallback(callback);
     }
 
     @Override
     public void run() {
         try {
-            Socket sock = socket.accept();
             NetClient client = new NetClient();
-            NetworkHandler han = NetworkHandler.create(sock, client);
+            NetworkHandler han = NetworkHandler.create(socket.accept(), client);
             client.setHandler(han);
             clients.add(client);
             if (clients.size() == playerCount) {
@@ -81,7 +86,7 @@ public class HostSession implements Runnable, NetHandler {
     }
 
     /**
-     * Waits until the desired Playercount has been reached
+     * Waits until the desired Player count has been reached
      */
     public void awaitConnections() {
         try {
@@ -106,7 +111,16 @@ public class HostSession implements Runnable, NetHandler {
 
     @Override
     public void send(Encodable obj) {
-        clients.forEach(netClient -> netClient.getHandler().send(obj));
+        new Thread(() -> clients.forEach(netClient -> netClient.getHandler().send(obj)), "Send Encodable Thread").start();
+    }
+
+    @Override
+    public void disconnect() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void send(Encodable obj, NetworkHandler client) {
@@ -126,8 +140,11 @@ public class HostSession implements Runnable, NetHandler {
      *
      * @return the next participant to be passed to draw.
      */
-    public NetClient evaluateNextDrawer() {
+    public DrawToken evaluateNextDrawer() {
         List<NetClient> available = clients.stream().filter(netClient -> !hasDrawn.contains(netClient)).collect(Collectors.toList());
+        if (!hasDrawn.contains(self)) {
+            available.add(self);
+        }
         if (available.size() == 0) {
             available = clients;
             hasDrawn.clear();
@@ -135,9 +152,32 @@ public class HostSession implements Runnable, NetHandler {
         }
         NetClient next = available.get(new Random().nextInt(available.size()));
         hasDrawn.add(next);
-        DrawToken token = new DrawToken(next.getClient());
-        send(token);
-        return next;
+        waitForClient(next);
+        return new DrawToken(next.getClient());
+    }
+
+    private void waitForClient(NetClient client) {
+        int maxWaitTime = 100, interval = 10, counter = 0;
+        while (!client.hasClient()) {
+            try {
+                Thread.sleep(interval);
+                counter++;
+                if (counter >= maxWaitTime) {
+                    throw new RuntimeException("Failed to find client");
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Failed to find client");
+            }
+        }
+    }
+
+    public NetClient find(Participant participant) {
+        for (NetClient client : clients) {
+            if (client.getClient().equals(participant)) {
+                return client;
+            }
+        }
+        return null;
     }
 
     /**

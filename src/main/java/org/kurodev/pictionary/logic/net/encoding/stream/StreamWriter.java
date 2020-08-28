@@ -44,4 +44,8 @@ public class StreamWriter {
         }
         write(arr);
     }
+
+    public void close() throws IOException {
+        out.close();
+    }
 }
