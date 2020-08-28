@@ -20,15 +20,14 @@ public class GUIManager {
     private static GUIBody instance;
     public static Participant myself;
     static ArrayList<Participant> participant_list = new ArrayList<>();
-    static NetworkCallback game_callback;
+    static NetworkCallback game_callback = null;
 
     static NetHandler message_sender = null;
 
-    public static void instantiate(Runnable if_hosted, Runnable if_joined, NetworkCallback _game_callback) {
+    public static void instantiate(Runnable if_hosted, Runnable if_joined) {
 
         info = new GUIGetInfo();
 
-        game_callback = _game_callback;
         info.but_start_host.addActionListener(e -> if_hosted.run());
         info.but_start_join.addActionListener(e -> if_joined.run());
     }
@@ -75,7 +74,7 @@ public class GUIManager {
 
                 }
 
-                game_callback.onObjectReceived(obj);
+                if (game_callback != null) game_callback.onObjectReceived(obj);
 
             }
 
@@ -114,7 +113,7 @@ public class GUIManager {
 
     }
 
-    public static void updateScore(String name, int score) {
+    public static void setScore(String name, int score) {
         for (int i = 0; i < participant_list.size(); i++)
             if (participant_list.get(i).getName().equals(name))
                 participant_list.get(i).setScore(score);
@@ -148,6 +147,22 @@ public class GUIManager {
 
     public static void setTime(int min, int sec) {
         instance.lbl_timer_lft_mid.setText(((min + "").length() == 1 ? "0" : "") + min + ":" + ((sec + "").length() == 1 ? "0" : "") + sec);
+    }
+
+    public static void setGame_callback(NetworkCallback game_callback) {
+        GUIManager.game_callback = game_callback;
+    }
+
+    public static void setHint(String hint) {
+        instance.lbl_hint_top.setText(hint);
+    }
+
+    public static void setTime(int time) {
+        setTime(time / 60, time % 60);
+    }
+
+    public static void setDrawing(boolean mark) {
+        instance.draw_event_handle.setEnabled(mark);
     }
 
 }
