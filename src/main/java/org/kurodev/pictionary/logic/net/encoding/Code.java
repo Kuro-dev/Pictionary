@@ -6,6 +6,7 @@ import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
 import org.kurodev.pictionary.logic.net.communication.command.Command;
 import org.kurodev.pictionary.logic.net.communication.command.tokens.*;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.event.GameEventToken;
 import org.kurodev.pictionary.logic.net.encoding.stream.EasyByteReader;
 import org.kurodev.pictionary.overlay.util.MessageEncodable;
 
@@ -24,6 +25,8 @@ public enum Code {
     MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
     //TOKENS,
+    GAME_EVENT(GameEventToken.class),
+    SCORE(ScoreToken.class),
     DRAW_TOKEN(DrawToken.class),
     TIMEOUT_TOKEN(TimeOutToken.class),
     CORRECT_GUESS(CorrectGuessToken.class),
