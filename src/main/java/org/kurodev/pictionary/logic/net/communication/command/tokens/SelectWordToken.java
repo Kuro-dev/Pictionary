@@ -28,6 +28,10 @@ public class SelectWordToken extends Token {
                 '}';
     }
 
+    public String[] getWords() {
+        return words;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
