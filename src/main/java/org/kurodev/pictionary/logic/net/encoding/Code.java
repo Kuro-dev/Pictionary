@@ -27,7 +27,6 @@ public enum Code {
     MESSAGE(MessageEncodable.class),
     PARTICIPANT(Participant.class),
     PIXEL(Pixel.class),
-    ROUNDOVER(RoundOver.class),
     SCORE(GameEndedAndHereIsTheScore.class),
     STARTER(TakeThisAsTheHint.class),
     TIME(Time.class),
