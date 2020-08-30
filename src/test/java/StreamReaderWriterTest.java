@@ -6,6 +6,7 @@ import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.img.Image;
 import org.kurodev.pictionary.logic.img.Pixel;
 import org.kurodev.pictionary.logic.net.communication.Participant;
+import org.kurodev.pictionary.logic.net.communication.command.tokens.SelectWordToken;
 import org.kurodev.pictionary.logic.net.encoding.Encodable;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamReader;
 import org.kurodev.pictionary.logic.net.encoding.stream.StreamWriter;
@@ -72,6 +73,12 @@ public class StreamReaderWriterTest {
     @Test
     public void messageEncodableTest() throws IOException {
         Encodable expected = new MessageEncodable("Kuro", "Hello");
+        testStreamRead(expected);
+    }
+
+    @Test
+    public void messageSelectWordToken() throws IOException {
+        Encodable expected = new SelectWordToken("Kuro", "Hello", "Hey");
         testStreamRead(expected);
     }
 

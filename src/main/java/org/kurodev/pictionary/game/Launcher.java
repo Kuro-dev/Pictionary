@@ -83,7 +83,6 @@ public class Launcher {
         session.send(GUIManager.myself);
         GUIManager.setNetHandler(session);
 
-
         // STARTING GAME
         drawer = session.evaluateNextDrawer();
 //             Pick 3 from wordlist and send it to drawer
@@ -201,6 +200,8 @@ public class Launcher {
 
         @Override
         public void onObjectReceived(Encodable obj) {
+
+            System.out.println(obj);
 
             // Receiving this object mean that this client has been chosen to be the drawer
             if (obj instanceof SelectWordToken) {
