@@ -24,10 +24,6 @@ public class HintToken extends Token {
         hint = data.readString();
     }
 
-    public String getHint() {
-        return hint;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
