@@ -33,7 +33,8 @@ public class StreamReader implements Runnable {
     public byte[] read() throws IOException {
         byte[] buf = new byte[4];
         //noinspection ResultOfMethodCallIgnored
-        in.read(buf);
+        if (in.available() > 0)
+            in.read(buf);
         int len = ByteUtils.byteToInt(buf);
         byte[] bytes = new byte[len];
         int readBytes = in.read(bytes);
@@ -52,5 +53,9 @@ public class StreamReader implements Runnable {
 
     public void setCallback(NetworkCallback callback) {
         this.callback = callback;
+    }
+
+    public void close() throws IOException {
+        in.close();
     }
 }

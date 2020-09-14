@@ -64,6 +64,10 @@ public class SessionTest {
                 assertTrue(clientCallback.getEncodables().contains(en));
             }
         }).start();
+        session.disconnect();
+        for (NetworkHandler client : clients) {
+            client.disconnect();
+        }
     }
 
 }

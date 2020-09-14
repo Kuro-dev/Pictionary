@@ -1,6 +1,7 @@
 package org.kurodev.pictionary.game;
 
-import org.kurodev.pictionary.game.util.*;
+import org.kurodev.pictionary.game.util.GameEndedAndHereIsTheScore;
+import org.kurodev.pictionary.game.util.TakeThisAsTheHint;
 import org.kurodev.pictionary.logic.Pictionary;
 import org.kurodev.pictionary.logic.callbacks.NetworkCallback;
 import org.kurodev.pictionary.logic.net.communication.HostSession;
@@ -84,7 +85,7 @@ public class Launcher {
         GUIManager.setNetHandler(session);
 
         // STARTING GAME
-        drawer = session.evaluateNextDrawer();
+        //  drawer = session.evaluateNextDrawer();
 //             Pick 3 from wordlist and send it to drawer
 //            drawer.getHandler().send();
         drawer.getHandler().send(new SelectWordToken("Apple", "Bapple", "Capple"));
@@ -161,7 +162,7 @@ public class Launcher {
                     session.send(new ScoreToken(e.getName(), remainingtime));
                     session.send(new ScoreToken(drawer.getClient().getName(), remainingtime / 2));
                     counter.reset();
-                    drawer = session.evaluateNextDrawer();
+                    //drawer = session.evaluateNextDrawer();
                     drawer.getHandler().send(new SelectWordToken("Apple", "Bapple", "Capple"));
                 }
             }

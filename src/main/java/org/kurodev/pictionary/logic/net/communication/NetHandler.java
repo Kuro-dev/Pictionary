@@ -7,4 +7,6 @@ import org.kurodev.pictionary.logic.net.encoding.Encodable;
  **/
 public interface NetHandler {
     void send(Encodable obj);
+
+    void disconnect();
 }

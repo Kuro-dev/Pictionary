@@ -23,7 +23,7 @@ public class VoidCallback implements NetworkCallback {
 
     @Override
     public void onObjectReceived(Encodable obj) {
-       // System.out.println(s + " received: " + obj);
+        System.out.println(s + " received: " + obj);
         encodables.add(obj);
     }
 
